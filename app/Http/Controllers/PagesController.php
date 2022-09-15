@@ -37,7 +37,10 @@ class PagesController extends Controller
      */
     public function store(StorePagesRequest $request)
     {
-        Pages::create($request->validated());
+        $data = $request->validated();
+        $data['user_id'] = auth()->user()->id;
+        Pages::create($data);
+
         return redirect()->route('pages.index');
     }
 
@@ -86,6 +89,5 @@ class PagesController extends Controller
     {
         $pages->delete();
         return redirect()->route('pages.index');
-        //
     }
 }

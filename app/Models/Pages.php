@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Pages extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+    */
+    protected $fillable = [
+        'name',
+        'user_id',
+    ];
+
 }
