@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pages extends Model
+class Page extends Model
 {
     use HasFactory;
 
@@ -18,5 +18,4 @@ class Pages extends Model
         'name',
         'user_id',
     ];
-
 }
