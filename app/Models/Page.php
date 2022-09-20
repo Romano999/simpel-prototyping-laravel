@@ -15,7 +15,7 @@ class Page extends Model
      * @var string[]
     */
     protected $fillable = [
-        'name',
         'user_id',
+        'name',
     ];
 }
