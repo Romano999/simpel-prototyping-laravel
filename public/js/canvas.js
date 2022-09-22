@@ -8,8 +8,14 @@ let current_shape_index;
 let context;
 let canvas_width;
 let canvas_height;
+// Passed on by blade file
+var page = page;
+var pageObjects = pageObjects;
 
 window.addEventListener('DOMContentLoaded', (event) => {
+
+    console.log(page);
+    console.log(pageObjects);
 
     canvas = document.getElementById("canvas");
     context = canvas.getContext("2d");

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Page;
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -63,7 +64,8 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        return view('pages.edit', compact('page'));
+        $pageObjects = DB::table('page_objects')->where('page_id', $page->id)->get();
+        return view('pages.edit', compact('page', 'pageObjects'));
     }
 
     /**

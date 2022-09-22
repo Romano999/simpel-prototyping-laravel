@@ -1,5 +1,11 @@
 <x-app-layout>
-    <script src="{{ asset("js/canvas.js") }}"></script>
+    <script>
+        var page = @json($page);
+        var pageObjects = @json($pageObjects);
+    </script>
+    <script src="{{ asset("js/canvas.js") }}">
+        
+    </script>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Edit Page') }}

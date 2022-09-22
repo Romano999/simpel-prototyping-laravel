@@ -19,6 +19,12 @@ class PageObjectSeeder extends Seeder
             'page_id' => 1,
             'pos_x' => 100,
             'pos_y' => 100,
-         ]);
+        ]);
+
+        PageObject::factory()->create([
+            'page_id' => 1,
+            'pos_x' => 200,
+            'pos_y' => 200,
+        ]);
     }
 }
