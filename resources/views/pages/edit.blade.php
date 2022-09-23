@@ -1,7 +1,7 @@
 <x-app-layout>
     <script>
         var page = @json($page);
-        var pageObjects = @json($pageObjects);
+        var pageObjects = @json($objects);
     </script>
     <script src="{{ asset("js/canvas.js") }}">
         

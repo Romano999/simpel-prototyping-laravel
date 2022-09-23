@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('text_boxes', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('object_id')->references('id')->on('page_objects')->onDelete('cascade');
+            $table->integer("text")->default("Hello world!")->nullable(true);
+            $table->integer("max_width")->nullable(true);
+            $table->string("font")->default("10px sans-serif");
+            $table->string("text_align")->default("start");
+            $table->string("text_baseline")->default("alphabetic");
+            $table->string("direction")->default("inherit");
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('text_boxes');
+    }
+};

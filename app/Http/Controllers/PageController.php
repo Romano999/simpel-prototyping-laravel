@@ -65,7 +65,39 @@ class PageController extends Controller
     public function edit(Page $page)
     {
         $pageObjects = DB::table('page_objects')->where('page_id', $page->id)->get();
-        return view('pages.edit', compact('page', 'pageObjects'));
+        $objects = array();
+
+        $text_boxes = DB::table('page_objects')
+        ->join('text_boxes', 'text_boxes.object_id', '=', 'page_objects.id')
+        ->where('page_objects.page_id', '=', $page->id)
+        ->get();
+        
+
+        $images = DB::table('page_objects')
+        ->join('images', 'images.object_id', '=', 'page_objects.id')
+        ->where('page_objects.page_id', '=', $page->id)
+        ->get();
+
+        for ($i = 0; $i <= count($text_boxes) - 1; $i++) {
+            $objects[] = $text_boxes[$i];
+        }
+
+        for ($i = 0; $i <= count($images) - 1; $i++) {
+            $objects[] = $images[$i];
+        }
+
+        // for ($i = 0; $i <= count($pageObjects) - 1; $i++) {
+        //     if ($pageObjects[$i]->object_type == 'text_box') {
+        //         
+        //     }
+        //     else if ($pageObjects[$i]->object_type == 'image') {
+        //         // $object = DB::table('images')->join('page_objects', 'images.object_id', '=', 'page_objects.id')->get();
+        //         // $objects[] = $object;
+        //     }
+        // }
+
+
+        return view('pages.edit', compact('page', 'objects'));
     }
 
     /**
