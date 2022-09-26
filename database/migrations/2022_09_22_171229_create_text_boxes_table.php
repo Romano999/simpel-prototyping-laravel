@@ -16,12 +16,8 @@ return new class extends Migration
         Schema::create('text_boxes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('object_id')->references('id')->on('page_objects')->onDelete('cascade');
-            $table->integer("text")->default("Hello world!")->nullable(true);
-            $table->integer("max_width")->nullable(true);
+            $table->string("text")->default("Hello world!")->nullable(true);
             $table->string("font")->default("10px sans-serif");
-            $table->string("text_align")->default("start");
-            $table->string("text_baseline")->default("alphabetic");
-            $table->string("direction")->default("inherit");
             $table->timestamps();
         });
     }

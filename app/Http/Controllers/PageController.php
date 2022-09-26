@@ -33,7 +33,7 @@ class PageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorePageRequest  $request
+     * @param  \App\Http\Requests\StorePageRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StorePageRequest $request)
@@ -48,7 +48,7 @@ class PageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Page  $page
+     * @param  \App\Models\Page $page
      * @return \Illuminate\Http\Response
      */
     public function show(Page $page)
@@ -59,7 +59,7 @@ class PageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Page  $page
+     * @param  \App\Models\Page $page
      * @return \Illuminate\Http\Response
      */
     public function edit(Page $page)
@@ -86,25 +86,14 @@ class PageController extends Controller
             $objects[] = $images[$i];
         }
 
-        // for ($i = 0; $i <= count($pageObjects) - 1; $i++) {
-        //     if ($pageObjects[$i]->object_type == 'text_box') {
-        //         
-        //     }
-        //     else if ($pageObjects[$i]->object_type == 'image') {
-        //         // $object = DB::table('images')->join('page_objects', 'images.object_id', '=', 'page_objects.id')->get();
-        //         // $objects[] = $object;
-        //     }
-        // }
-
-
         return view('pages.edit', compact('page', 'objects'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatePageRequest  $request
-     * @param  \App\Models\Pages $pages
+     * @param  \App\Http\Requests\UpdatePageRequest $request
+     * @param  \App\Models\Page $page
      * @return \Illuminate\Http\Response
      */
     public function update(UpdatePageRequest $request, Page $page)

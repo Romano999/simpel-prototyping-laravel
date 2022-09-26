@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('page_id')->references('id')->on('pages')->onDelete('cascade');
             $table->integer("pos_x");
             $table->integer("pos_y");
+            $table->integer('angle')->default(0);
             $table->enum('object_type', ['text_box', 'image']);
             $table->timestamps();
         });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PageObject;
 use App\Http\Requests\StorePageObjectRequest;
 use App\Http\Requests\UpdatePageObjectRequest;
+use Illuminate\Support\Facades\DB;
 
 class PageObjectController extends Controller
 {
@@ -70,7 +71,16 @@ class PageObjectController extends Controller
      */
     public function update(UpdatePageObjectRequest $request, PageObject $pageObject)
     {
-        //
+        $data = $request->validated();
+        $pageObject->update($data);
+
+        DB::table('page_objects')->where('id', $pageObject->id)->update([
+            'pos_x' => $request->pos_x,
+            'pos_y' => $request->pos_y,
+            'angle' => $request->angle,
+        ]);
+
+        return;
     }
 
     /**
