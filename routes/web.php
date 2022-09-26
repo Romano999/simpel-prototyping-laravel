@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\PageObjectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,4 +27,6 @@ Route::middleware([
     Route::get('dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::resource('pages', PageController::class);
+    Route::resource('page_objects', PageObjectController::class);
 });
