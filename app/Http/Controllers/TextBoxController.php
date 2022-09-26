@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TextBox;
 use App\Http\Requests\StoreTextBoxRequest;
 use App\Http\Requests\UpdateTextBoxRequest;
+use App\Models\TextBox;
 
 class TextBoxController extends Controller
 {

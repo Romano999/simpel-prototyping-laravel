@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Page;
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
+use App\Models\Page;
 use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller

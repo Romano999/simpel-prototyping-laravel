@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PageObject;
 use App\Http\Requests\StorePageObjectRequest;
 use App\Http\Requests\UpdatePageObjectRequest;
+use App\Models\PageObject;
 use Illuminate\Support\Facades\DB;
 
 class PageObjectController extends Controller
