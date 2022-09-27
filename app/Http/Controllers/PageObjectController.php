@@ -37,7 +37,16 @@ class PageObjectController extends Controller
      */
     public function store(StorePageObjectRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $pageObject = PageObject::create([
+            'page_id' => $request->page_id,
+            'object_type' => $request->object_type,
+        ]);
+
+        // $data->id = $id;
+
+        return DB::table('page_objects')->where('id', $pageObject->id)->get()[0];;
     }
 
     /**

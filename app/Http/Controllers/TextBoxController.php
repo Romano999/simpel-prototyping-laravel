@@ -37,7 +37,11 @@ class TextBoxController extends Controller
      */
     public function store(StoreTextBoxRequest $request)
     {
-        //
+        $textBox = TextBox::create([
+            'object_id' => $request->object_id,
+        ]);
+
+        return DB::table('text_boxes')->where('id', $textBox->id)->get()[0];
     }
 
     /**

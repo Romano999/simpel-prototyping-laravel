@@ -11,8 +11,8 @@ return new class extends Migration
         Schema::create('page_objects', function (Blueprint $table) {
             $table->id();
             $table->foreignId('page_id')->references('id')->on('pages')->onDelete('cascade');
-            $table->integer("pos_x");
-            $table->integer("pos_y");
+            $table->integer("pos_x")->default(100);
+            $table->integer("pos_y")->default(100);
             $table->integer('angle')->default(0);
             $table->enum('object_type', ['text_box', 'image']);
             $table->timestamps();

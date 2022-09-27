@@ -21,6 +21,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
         render(pageObject)
     }
 
+    document.getElementById('create-text-button').onclick = function() {
+        create_default_text()
+    };
+
+    // document.getElementById('text-font-size').onchange = function() {
+    //     canvas.getActiveObject().set("fontSize", this.value);
+    //     canvas.renderAll();
+    // };
+
     canvas.on('object:modified', function(event){
         post_object(event);
     });
@@ -37,7 +46,7 @@ let render = function(pageObject) {
 }
 
 let render_image = function() {
-    // fabric.Image.fromURL('my_image.png', function(img) {
+    // fabric.Image.fromURL('/image.jpg', function(img) {
     //     canvas.add(img);
     // });
 }
@@ -56,13 +65,15 @@ let render_text_box = function(pageObject) {
 
     // Render the Text on Canvas
     canvas.add(text);
+
+    console.log(`Text box data: ${text}`)
+    canvas.setActiveObject(text)
 }
 
 let post_object = function(event) {
     console.log(event);
     let object_type = event.target.object_type;
     
-
     if (object_type === 'text_box') {
         let object_data = { id: event.target.object_id, page_id: page.id, angle: event.target.angle, object_type: event.target.object_type, pos_x: event.target.left, pos_y: event.target.top };
         let text_box = { id: event.target.id, text: event.target.text, }
@@ -107,6 +118,29 @@ let post_object_data = function(object_data) {
     ).then(async function (response) {
         console.log(await response);
     }).catch(function (error) {  
+        console.error(error);  
+    });
+}
+
+
+let create_default_text = function() {
+    axios.post( `/page_objects`, { "page_id": page.id, "object_type": "text_box"})
+    .then(async function (response) {
+        let object = response.data;
+        axios.post( `/text_boxes`, { "object_id": object.id })
+        .then(async function (response) {
+            let text_box = response.data;
+            let data = Object.assign(object, text_box);
+            console.log(`Object data: ${JSON.stringify(object)}`)
+            console.log(`Text box data: ${JSON.stringify(text_box)}`)
+            console.log(`Response data merged: ${JSON.stringify(data)}`)
+            render_text_box(data);
+        })
+        .catch(function (error) {  
+            console.error(error);  
+        });
+    })
+    .catch(function (error) {  
         console.error(error);  
     });
 }

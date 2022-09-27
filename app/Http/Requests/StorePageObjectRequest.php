@@ -24,7 +24,8 @@ class StorePageObjectRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'page_id' => 'required|numeric',
+            'object_type' => 'required',
         ];
     }
 }
