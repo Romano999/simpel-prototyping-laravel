@@ -15,7 +15,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     // Create a new instance of Canvas
     canvas = new fabric.Canvas("canvas");
- 
 
     // Render all page objects
     for (let pageObject of pageObjects) {
@@ -45,7 +44,7 @@ let render_image = function() {
 
 let render_text_box = function(pageObject) {
     // Create a new Text instance
-    var text = new fabric.Text(pageObject.text, {
+    var text = new fabric.IText(pageObject.text, {
         id: pageObject.id,
         object_id: pageObject.object_id,
         font: pageObject.font,
@@ -66,14 +65,30 @@ let post_object = function(event) {
 
     if (object_type === 'text_box') {
         let object_data = { id: event.target.object_id, page_id: page.id, angle: event.target.angle, object_type: event.target.object_type, pos_x: event.target.left, pos_y: event.target.top };
-        let text_box = { text: event.target.text, }
+        let text_box = { id: event.target.id, text: event.target.text, }
         post_text_box(text_box)
         post_object_data(object_data)
     }
 }
 
 let post_text_box = function(text_box) {
-    // console.log(`Text box: ${JSON.stringify(text_box)}`);
+    console.log(`Textbox data: ${JSON.stringify(text_box)}`)
+
+    let config = {
+        headers: {
+            'Content-Type': "application/json"
+        }
+    }
+
+    axios.put(
+        `/text_boxes/${text_box.id}`, 
+        text_box,
+        config
+    ).then(async function (response) {
+        console.log(await response);
+    }).catch(function (error) {  
+        console.error(error);  
+    });
 }
 
 let post_object_data = function(object_data) {

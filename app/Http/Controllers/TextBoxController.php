@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTextBoxRequest;
 use App\Http\Requests\UpdateTextBoxRequest;
 use App\Models\TextBox;
+use Illuminate\Support\Facades\DB;
 
 class TextBoxController extends Controller
 {
@@ -70,7 +71,11 @@ class TextBoxController extends Controller
      */
     public function update(UpdateTextBoxRequest $request, TextBox $textBox)
     {
-        //
+        DB::table('text_boxes')->where('id', $textBox->id)->update([
+            'text' => $request->text,
+        ]);
+
+        return;
     }
 
     /**

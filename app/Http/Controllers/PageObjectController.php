@@ -71,9 +71,6 @@ class PageObjectController extends Controller
      */
     public function update(UpdatePageObjectRequest $request, PageObject $pageObject)
     {
-        $data = $request->validated();
-        $pageObject->update($data);
-
         DB::table('page_objects')->where('id', $pageObject->id)->update([
             'pos_x' => $request->pos_x,
             'pos_y' => $request->pos_y,
