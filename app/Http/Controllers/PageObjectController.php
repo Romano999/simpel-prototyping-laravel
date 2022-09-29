@@ -97,6 +97,6 @@ class PageObjectController extends Controller
      */
     public function destroy(PageObject $pageObject)
     {
-        //
+        return DB::table('page_objects')->delete($pageObject->id);
     }
 }

@@ -10,6 +10,7 @@ let canvas_height;
 // Passed on by blade file
 var page = page;
 var pageObjects = pageObjects;
+var selectedObject;
 
 window.addEventListener('DOMContentLoaded', (event) => {
 
@@ -21,14 +22,28 @@ window.addEventListener('DOMContentLoaded', (event) => {
         render(pageObject)
     }
 
+    canvas.on('mouse:down', function(event){
+        if (event.target) {
+            selectedObject = event.target;
+            document.getElementById('canvas-edit').style.display = 'block';
+        } else  {
+            selectedObject = null;
+            document.getElementById('canvas-edit').style.display = 'none';
+        }
+    });
+    
     document.getElementById('create-text-button').onclick = function() {
         create_default_text()
     };
 
-    // document.getElementById('text-font-size').onchange = function() {
-    //     canvas.getActiveObject().set("fontSize", this.value);
-    //     canvas.renderAll();
-    // };
+    document.getElementById('text-font-size').onchange = function() {
+        canvas.getActiveObject().set("fontSize", this.value);
+        canvas.renderAll();
+    };
+
+    document.getElementById('delete-text-button').onclick = function() {
+        delete_object(canvas.getActiveObject());
+    };
 
     canvas.on('object:modified', function(event){
         post_object(event);
@@ -141,6 +156,40 @@ let create_default_text = function() {
         });
     })
     .catch(function (error) {  
+        console.error(error);  
+    });
+}
+
+let delete_object = function(object) {
+    let object_data = { id: object.object_id, page_id: page.id, angle: object.angle, object_type: object.object_type, pos_x: object.left, pos_y: object.top };
+
+    if (object.object_type === 'text_box') {
+        let text_box = { id: object.id, text: object.text, }
+        delete_text_box(text_box)
+        delete_object_data(object_data)
+    }
+
+    canvas.remove(object);
+}
+
+let delete_text_box = function(text_box) {
+    axios.delete(
+        `/text_boxes/${text_box.id}`, 
+        text_box,
+    ).then(async function (response) {
+        console.log(await response);
+    }).catch(function (error) {  
+        console.error(error);  
+    });
+}
+
+let delete_object_data = function(object_data) {
+    axios.delete(
+        `/page_objects/${object_data.id}`, 
+        object_data,
+    ).then(async function (response) {
+        console.log(await response);
+    }).catch(function (error) {  
         console.error(error);  
     });
 }
