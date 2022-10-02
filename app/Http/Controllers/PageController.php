@@ -72,9 +72,23 @@ class PageController extends Controller
         ->where('page_objects.page_id', '=', $page->id)
         ->get();
         
-
         $images = DB::table('page_objects')
         ->join('images', 'images.object_id', '=', 'page_objects.id')
+        ->where('page_objects.page_id', '=', $page->id)
+        ->get();
+
+        $rectangles = DB::table('page_objects')
+        ->join('rectangles', 'rectangles.object_id', '=', 'page_objects.id')
+        ->where('page_objects.page_id', '=', $page->id)
+        ->get();
+
+        $circles = DB::table('page_objects')
+        ->join('circles', 'circles.object_id', '=', 'page_objects.id')
+        ->where('page_objects.page_id', '=', $page->id)
+        ->get();
+
+        $triangles = DB::table('page_objects')
+        ->join('triangles', 'triangles.object_id', '=', 'page_objects.id')
         ->where('page_objects.page_id', '=', $page->id)
         ->get();
 
@@ -84,6 +98,18 @@ class PageController extends Controller
 
         for ($i = 0; $i <= count($images) - 1; $i++) {
             $objects[] = $images[$i];
+        }
+
+        for ($i = 0; $i <= count($rectangles) - 1; $i++) {
+            $objects[] = $rectangles[$i];
+        }
+
+        for ($i = 0; $i <= count($circles) - 1; $i++) {
+            $objects[] = $circles[$i];
+        }
+
+        for ($i = 0; $i <= count($triangles) - 1; $i++) {
+            $objects[] = $triangles[$i];
         }
 
         return view('pages.edit', compact('page', 'objects'));

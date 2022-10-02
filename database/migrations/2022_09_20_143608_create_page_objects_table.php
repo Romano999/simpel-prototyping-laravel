@@ -14,7 +14,9 @@ return new class extends Migration
             $table->integer("pos_x")->default(100);
             $table->integer("pos_y")->default(100);
             $table->integer('angle')->default(0);
-            $table->enum('object_type', ['text_box', 'image']);
+            $table->integer('height')->default(100);
+            $table->integer('width')->default(100);
+            $table->enum('object_type', ['text_box', 'image', 'rectangle', 'circle', 'triangle']);
             $table->timestamps();
         });
     }

@@ -14,7 +14,7 @@
                     </div>
                     @forelse ($pages as $page)
                     <div class="inline-grid grid-cols-3 gap-3 items-center">
-                        <div class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                        <div class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                             {{ $page->name }}
                         </div>
 

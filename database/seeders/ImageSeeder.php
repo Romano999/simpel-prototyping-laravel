@@ -15,7 +15,7 @@ class ImageSeeder extends Seeder
     public function run()
     {
         Image::factory()->create([
-            'object_id' => 3,
+            'object_id' => 2,
         ]);
     }
 }

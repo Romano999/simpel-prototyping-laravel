@@ -17,9 +17,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // Create a new instance of Canvas
     canvas = new fabric.Canvas("canvas");
 
+    console.log(`Object type: ${pageObjects} found.`)
+
     // Render all page objects
     for (let pageObject of pageObjects) {
-        render(pageObject)
+        render(pageObject);
     }
 
     canvas.on('mouse:down', function(event){
@@ -57,6 +59,12 @@ let render = function(pageObject) {
         render_text_box(pageObject);
     } else if (object_type == 'image') {
         render_image(pageObject);
+    } else if (object_type == 'rectangle') {
+        render_rectangle(pageObject);
+    } else if (object_type == 'circle') {
+        render_circle(pageObject);
+    } else if (object_type == 'triangle') {
+        render_triangle(pageObject);
     }
 }
 
@@ -81,12 +89,69 @@ let render_text_box = function(pageObject) {
     // Render the Text on Canvas
     canvas.add(text);
 
-    console.log(`Text box data: ${text}`)
-    canvas.setActiveObject(text)
+    console.log(`Text box data: ${text}`);
+    canvas.setActiveObject(text);
+}
+
+let render_rectangle = function(pageObject) {
+    var rectangle = new fabric.Rect({
+        id: pageObject.id,
+        object_id: pageObject.object_id,
+        left: pageObject.pos_x,
+        top: pageObject.pos_y,
+        angle: pageObject.angle,
+        height: pageObject.height,
+        width: pageObject.width,
+        fill: pageObject.fill,
+        stroke: pageObject.stroke,
+        strokeWidth: pageObject.stroke_width,
+        object_type: pageObject.object_type,
+    });
+
+    console.log(`Rectangle data: ${rectangle}`);
+    canvas.add(rectangle);
+}
+
+let render_circle = function(pageObject) {
+    var circle = new fabric.Circle({
+        id: pageObject.id,
+        object_id: pageObject.object_id,
+        left: pageObject.pos_x,
+        top: pageObject.pos_y,
+        angle: pageObject.angle,
+        height: pageObject.height,
+        width: pageObject.width,
+        radius: pageObject.radius,
+        fill: pageObject.fill,
+        stroke: pageObject.stroke,
+        strokeWidth: pageObject.stroke_width,
+        object_type: pageObject.object_type,
+    });
+
+    console.log(`Circle data: ${circle}`);
+    canvas.add(circle);
+}
+
+let render_triangle = function(pageObject) {
+    var triangle = new fabric.Triangle({
+        id: pageObject.id,
+        object_id: pageObject.object_id,
+        left: pageObject.pos_x,
+        top: pageObject.pos_y,
+        angle: pageObject.angle,
+        height: pageObject.height,
+        width: pageObject.width,
+        fill: pageObject.fill,
+        stroke: pageObject.stroke,
+        strokeWidth: pageObject.stroke_width,
+        object_type: pageObject.object_type,
+    });
+
+    console.log(`Triangle data: ${triangle}`);
+    canvas.add(triangle);
 }
 
 let post_object = function(event) {
-    console.log(event);
     let object_type = event.target.object_type;
     
     if (object_type === 'text_box') {
@@ -111,7 +176,7 @@ let post_text_box = function(text_box) {
         text_box,
         config
     ).then(async function (response) {
-        console.log(await response);
+        // console.log(await response);
     }).catch(function (error) {  
         console.error(error);  
     });
@@ -131,7 +196,7 @@ let post_object_data = function(object_data) {
         object_data,
         config
     ).then(async function (response) {
-        console.log(await response);
+        // console.log(await response);
     }).catch(function (error) {  
         console.error(error);  
     });
