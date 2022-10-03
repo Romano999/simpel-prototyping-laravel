@@ -84,6 +84,8 @@ class PageObjectController extends Controller
             'pos_x' => $request->pos_x,
             'pos_y' => $request->pos_y,
             'angle' => $request->angle,
+            'height' => $request->height,
+            'width' => $request->width,
         ]);
 
         return;

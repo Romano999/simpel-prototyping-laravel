@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // Create a new instance of Canvas
     canvas = new fabric.Canvas("canvas");
 
-    console.log(`Object type: ${pageObjects} found.`)
+    console.log(`Object type: ${JSON.stringify(pageObjects)} found.`)
 
     // Render all page objects
     for (let pageObject of pageObjects) {
@@ -76,20 +76,21 @@ let render_image = function() {
 
 let render_text_box = function(pageObject) {
     // Create a new Text instance
-    var text = new fabric.IText(pageObject.text, {
+    var text = new fabric.Textbox(pageObject.text, {
         id: pageObject.id,
         object_id: pageObject.object_id,
         font: pageObject.font,
         left: pageObject.pos_x,
         top: pageObject.pos_y,
         angle: pageObject.angle,
+        height: pageObject.height,
+        width: pageObject.width,
         object_type: pageObject.object_type,
     });
 
     // Render the Text on Canvas
     canvas.add(text);
 
-    console.log(`Text box data: ${text}`);
     canvas.setActiveObject(text);
 }
 
@@ -108,7 +109,6 @@ let render_rectangle = function(pageObject) {
         object_type: pageObject.object_type,
     });
 
-    console.log(`Rectangle data: ${rectangle}`);
     canvas.add(rectangle);
 }
 
@@ -128,7 +128,6 @@ let render_circle = function(pageObject) {
         object_type: pageObject.object_type,
     });
 
-    console.log(`Circle data: ${circle}`);
     canvas.add(circle);
 }
 
@@ -147,18 +146,28 @@ let render_triangle = function(pageObject) {
         object_type: pageObject.object_type,
     });
 
-    console.log(`Triangle data: ${triangle}`);
     canvas.add(triangle);
 }
 
 let post_object = function(event) {
     let object_type = event.target.object_type;
-    
+  
+    let object_data = { 
+        id: event.target.object_id, 
+        page_id: page.id, 
+        angle: event.target.angle,
+        object_type: event.target.object_type, 
+        pos_x: event.target.left, 
+        pos_y: event.target.top,
+        height: event.target.getScaledHeight(),
+        width: event.target.getScaledWidth(),
+    };
+
+    post_object_data(object_data)
+
     if (object_type === 'text_box') {
-        let object_data = { id: event.target.object_id, page_id: page.id, angle: event.target.angle, object_type: event.target.object_type, pos_x: event.target.left, pos_y: event.target.top };
         let text_box = { id: event.target.id, text: event.target.text, }
         post_text_box(text_box)
-        post_object_data(object_data)
     }
 }
 
@@ -196,7 +205,7 @@ let post_object_data = function(object_data) {
         object_data,
         config
     ).then(async function (response) {
-        // console.log(await response);
+        console.log(await response);
     }).catch(function (error) {  
         console.error(error);  
     });
