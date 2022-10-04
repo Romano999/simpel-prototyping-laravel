@@ -13,7 +13,7 @@ class UpdateRectangleRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class UpdateRectangleRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id' => 'required|numeric',
+            'fill' => 'present|nullable|string',
+            'stroke' => 'required|string',
+            'stroke_width' => 'required|numeric',
         ];
     }
 }

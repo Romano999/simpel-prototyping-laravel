@@ -44,20 +44,29 @@
             <div class="flex flex-row justify-center items-end">
                 <div class="mx-auto my-auto">
                     <div class="flex flex-col gap-y-12 flex-wrap max-w-lg">
-                        <h1 class="dark:text-gray-400 text-[40px] font-bold"><span class="text-red-600 dark:text-red-300">Simplify</span> prototyping
-                         with <span class="text-red-600 dark:text-red-400">Simpel Prototyping</span></h1>
-                        <h2 class="dark:text-gray-400 text-xl">
+                        <h1 class="dark:text-gray-600 text-[40px] font-bold"><span class="text-red-600 dark:text-red-600">Simplify</span> prototyping
+                         with <span class="text-red-500 dark:text-red-600">Simpel Prototyping</span></h1>
+                        <h2 class="text-xl">
                             Simpel Prototyping helps with building a fully designed prototype in less than 10 minutes.
                         </h2>
                         <div class="flex flex-row gap-x-20">
-                            <button class="text-white bg-red-500 dark:bg-red-400 rounded-md p-2 pr-3 pl-3">Try it for free</button>
+                            <button class="text-white bg-red-500 dark:bg-red-600 rounded-md p-2 pr-3 pl-3">Try it for free</button>
                             <button class="border-2 border-red-400 dark:border-red-400 rounded-md p-2 pr-3 pl-3">Learn more</button>
                         </div>
                     </div>
                 </div>
                 <div class="mx-auto">
-                    <img src="{{ asset("images/logo/logo.png") }}" alt="" width="500px">
+                    <img src="{{ asset("logo/logo.png") }}" alt="" width="500px">
                 </div>
+            </div>
+        </div>
+        <div class="flex flex-row justify-center items-end text-center">
+            <div class="py-10 mx-auto my-auto">
+                <h1 class="text-red-600 dark:text-red-600 text-[40px] font-bold">Speed up your protoyping progress</h1>
+                <p class="dark:text-gray-600 text-[20px] font-bold">Simpel Prototyping offers many tools to make prototyping easier!</p>
+            </div>
+            <div>
+                
             </div>
         </div>
     </body>

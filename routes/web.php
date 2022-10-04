@@ -3,6 +3,10 @@
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PageObjectController;
 use App\Http\Controllers\TextBoxController;
+use App\Http\Controllers\RectangleController;
+use App\Http\Controllers\CircleController;
+use App\Http\Controllers\TriangleController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,4 +35,8 @@ Route::middleware([
     Route::resource('pages', PageController::class);
     Route::resource('page_objects', PageObjectController::class);
     Route::resource('text_boxes', TextBoxController::class);
+    Route::resource('rectangles', RectangleController::class);
+    Route::resource('triangles', TriangleController::class);
+    Route::resource('images', ImageController::class);
+    Route::resource('circles', CircleController::class);
 });

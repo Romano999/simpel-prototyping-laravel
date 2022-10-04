@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Rectangle extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+    */
+    protected $fillable = [
+        'id',
+        'fill',
+        'stroke',
+        'stroke_width',
+    ];
 }

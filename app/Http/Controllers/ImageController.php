@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
+use App\Models\PageObject;
 use App\Models\Image;
 
 class ImageController extends Controller
@@ -14,8 +15,9 @@ class ImageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {   
+        $images = Image::all();
+        return view('images.index', compact('images'));
     }
 
     /**
@@ -25,7 +27,7 @@ class ImageController extends Controller
      */
     public function create()
     {
-        //
+        return view('images.create');
     }
 
     /**
@@ -36,7 +38,24 @@ class ImageController extends Controller
      */
     public function store(StoreImageRequest $request)
     {
-        //
+        $data = new Image();
+        $pageObjectId = PageObject::create([            
+            'page_id' => 1,
+            'object_type' => 'image',
+        ])->id;
+
+        if($request->file('image')){
+            $file = $request->file('image');
+            $filename = date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('media'), $filename);
+            $data['image'] = $filename;
+            $data['object_id'] = $pageObjectId;
+        }
+
+
+        $data->save();
+
+        return redirect()->route('pages.index');
     }
 
     /**

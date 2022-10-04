@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Circle extends Model
 {
     use HasFactory;
+
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+    */
+    protected $fillable = [
+        'id',
+        'fill',
+        'radius',
+        'stroke',
+        'stroke_width',
+    ];
 }

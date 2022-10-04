@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rectangle;
 use App\Http\Requests\StoreRectangleRequest;
 use App\Http\Requests\UpdateRectangleRequest;
+use Illuminate\Support\Facades\DB;
 
 class RectangleController extends Controller
 {
@@ -36,7 +37,11 @@ class RectangleController extends Controller
      */
     public function store(StoreRectangleRequest $request)
     {
-        //
+        $rectangle = Rectangle::create([
+            'object_id' => $request->object_id,
+        ]);
+
+        return DB::table('rectangles')->where('id', $rectangle->id)->get()[0];
     }
 
     /**
@@ -70,7 +75,13 @@ class RectangleController extends Controller
      */
     public function update(UpdateRectangleRequest $request, Rectangle $rectangle)
     {
-        //
+        $data = $request->validated();
+
+        if (is_null($data['fill'])) {
+            $data['fill'] = "";
+        }
+
+        return $rectangle->update($data);
     }
 
     /**

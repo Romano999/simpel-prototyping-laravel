@@ -68,10 +68,23 @@ let render = function(pageObject) {
     }
 }
 
-let render_image = function() {
-    // fabric.Image.fromURL('/image.jpg', function(img) {
-    //     canvas.add(img);
-    // });
+let render_image = function(pageObject) {
+    console.log(pageObject)
+    fabric.Image.fromURL(`../../media/${pageObject.image}`, function(img, isError) {
+        if (isError) {
+            console.log("Error occured!")
+        } else {
+            let oImg = img.set({
+                left: pageObject.pos_x,  
+                top: pageObject.pos_y,
+                angle: pageObject.angle,
+                height: pageObject.height,
+                width: pageObject.width,
+                object_id: pageObject.object_id,
+            });
+            canvas.add(oImg);
+        }
+    });
 }
 
 let render_text_box = function(pageObject) {
@@ -168,7 +181,20 @@ let post_object = function(event) {
     if (object_type === 'text_box') {
         let text_box = { id: event.target.id, text: event.target.text, }
         post_text_box(text_box)
+    } else if (object_type == 'image') {
+        let image = {};
+        post_image(image);
+    } else if (object_type == 'rectangle') {
+        let rectangle = { id: event.target.id, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.width,};
+        post_rectangle(rectangle);
+    } else if (object_type == 'circle') {
+        let circle = { id: event.target.id, radius:event.target.radius, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.width,};
+        post_circle(circle);
+    } else if (object_type == 'triangle') {
+        let triangle = { id: event.target.id, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.width,};;
+        post_triangle(triangle);
     }
+
 }
 
 let post_text_box = function(text_box) {
@@ -191,6 +217,68 @@ let post_text_box = function(text_box) {
     });
 }
 
+let post_rectangle = function(rectangle) {
+    console.log(`Rectangle data: ${JSON.stringify(rectangle)}`)
+
+    let config = {
+        headers: {
+            'Content-Type': "application/json"
+        }
+    }
+
+    axios.put(
+        `/rectangles/${rectangle.id}`, 
+        rectangle,
+        config
+    ).then(async function (response) {
+        console.log(await response);
+    }).catch(function (error) {  
+        console.error(error);  
+    });
+}
+
+let post_circle = function(circle) {
+    console.log(`Circle data: ${JSON.stringify(circle)}`)
+
+    let config = {
+        headers: {
+            'Content-Type': "application/json"
+        }
+    }
+
+    axios.put(
+        `/circles/${circle.id}`, 
+        circle,
+        config
+    ).then(async function (response) {
+        // console.log(await response);
+    }).catch(function (error) {  
+        console.error(error);  
+    });
+}
+
+let post_triangle = function(triangle) {
+    console.log(`Triangle data: ${JSON.stringify(triangle)}`)
+
+    let config = {
+        headers: {
+            'Content-Type': "application/json"
+        }
+    }
+
+    axios.put(
+        `/triangles/${triangle.id}`, 
+        triangle,
+        config
+    ).then(async function (response) {
+        // console.log(await response);
+    }).catch(function (error) {  
+        console.error(error);  
+    });
+}
+
+
+
 let post_object_data = function(object_data) {
     console.log(`Object data: ${JSON.stringify(object_data)}`)
 
@@ -205,7 +293,7 @@ let post_object_data = function(object_data) {
         object_data,
         config
     ).then(async function (response) {
-        console.log(await response);
+        //console.log(await response);
     }).catch(function (error) {  
         console.error(error);  
     });

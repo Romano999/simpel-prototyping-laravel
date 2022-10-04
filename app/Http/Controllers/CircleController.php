@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Circle;
 use App\Http\Requests\StoreCircleRequest;
 use App\Http\Requests\UpdateCircleRequest;
+use Illuminate\Support\Facades\DB;
 
 class CircleController extends Controller
 {
@@ -36,7 +37,11 @@ class CircleController extends Controller
      */
     public function store(StoreCircleRequest $request)
     {
-        //
+        $circle = Circle::create([
+            'object_id' => $request->object_id,
+        ]);
+
+        return DB::table('circles')->where('id', $circle->id)->get()[0];
     }
 
     /**
@@ -70,7 +75,13 @@ class CircleController extends Controller
      */
     public function update(UpdateCircleRequest $request, Circle $circle)
     {
-        //
+        $data = $request->validated();
+
+        if (is_null($data['fill'])) {
+            $data['fill'] = "";
+        }
+
+        return $circle->update($data);
     }
 
     /**

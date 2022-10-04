@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Triangle;
 use App\Http\Requests\StoreTriangleRequest;
 use App\Http\Requests\UpdateTriangleRequest;
+use Illuminate\Support\Facades\DB;
 
 class TriangleController extends Controller
 {
@@ -36,7 +37,11 @@ class TriangleController extends Controller
      */
     public function store(StoreTriangleRequest $request)
     {
-        //
+        $triangle = Triangle::create([
+            'object_id' => $request->object_id,
+        ]);
+
+        return DB::table('triangles')->where('id', $triangle->id)->get()[0];
     }
 
     /**
@@ -70,7 +75,13 @@ class TriangleController extends Controller
      */
     public function update(UpdateTriangleRequest $request, Triangle $triangle)
     {
-        //
+        $data = $request->validated();
+
+        if (is_null($data['fill'])) {
+            $data['fill'] = "";
+        }
+
+        return $triangle->update($data);
     }
 
     /**

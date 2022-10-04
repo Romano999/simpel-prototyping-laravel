@@ -16,6 +16,7 @@ class ImageSeeder extends Seeder
     {
         Image::factory()->create([
             'object_id' => 2,
+            'image' => 'image.jpg',
         ]);
     }
 }
