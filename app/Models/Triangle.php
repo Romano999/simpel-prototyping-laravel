@@ -16,6 +16,7 @@ class Triangle extends Model
     */
     protected $fillable = [
         'id',
+        'object_id',
         'fill',
         'stroke',
         'stroke_width',

@@ -26,8 +26,17 @@
                                 <x-jet-button id="create-text-button" class="flex-1">
                                     {{ __('Create text') }}
                                 </x-jet-button>
-                                <x-jet-button class="flex-1">
+                                <x-jet-button id="create-image-button" class="flex-1">
                                     {{ __('Create image') }}
+                                </x-jet-button>
+                                <x-jet-button id="create-rectangle-button" class="flex-1">
+                                    {{ __('Create rectangle') }}
+                                </x-jet-button>
+                                <x-jet-button id="create-circle-button" class="flex-1">
+                                    {{ __('Create circle') }}
+                                </x-jet-button>
+                                 <x-jet-button id="create-triangle-button" class="flex-1">
+                                    {{ __('Create triangle') }}
                                 </x-jet-button>
                             </div>
                         </div>

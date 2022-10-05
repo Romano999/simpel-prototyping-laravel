@@ -38,6 +38,22 @@ window.addEventListener('DOMContentLoaded', (event) => {
         create_default_text()
     };
 
+    document.getElementById('create-image-button').onclick = function() {
+        create_default_image()
+    };
+
+    document.getElementById('create-rectangle-button').onclick = function() {
+        create_default_rectangle()
+    };
+
+    document.getElementById('create-circle-button').onclick = function() {
+        create_default_circle()
+    };
+
+    document.getElementById('create-triangle-button').onclick = function() {
+        create_default_triangle()
+    };
+
     document.getElementById('text-font-size').onchange = function() {
         canvas.getActiveObject().set("fontSize", this.value);
         canvas.renderAll();
@@ -118,7 +134,7 @@ let render_rectangle = function(pageObject) {
         width: pageObject.width,
         fill: pageObject.fill,
         stroke: pageObject.stroke,
-        strokeWidth: pageObject.stroke_width,
+        stroke_width: pageObject.stroke_width,
         object_type: pageObject.object_type,
     });
 
@@ -137,7 +153,7 @@ let render_circle = function(pageObject) {
         radius: pageObject.radius,
         fill: pageObject.fill,
         stroke: pageObject.stroke,
-        strokeWidth: pageObject.stroke_width,
+        stroke_width: pageObject.stroke_width,
         object_type: pageObject.object_type,
     });
 
@@ -155,7 +171,7 @@ let render_triangle = function(pageObject) {
         width: pageObject.width,
         fill: pageObject.fill,
         stroke: pageObject.stroke,
-        strokeWidth: pageObject.stroke_width,
+        stroke_width: pageObject.stroke_width,
         object_type: pageObject.object_type,
     });
 
@@ -178,6 +194,8 @@ let post_object = function(event) {
 
     post_object_data(object_data)
 
+    console.log(`${event.target}`)
+
     if (object_type === 'text_box') {
         let text_box = { id: event.target.id, text: event.target.text, }
         post_text_box(text_box)
@@ -185,13 +203,13 @@ let post_object = function(event) {
         let image = {};
         post_image(image);
     } else if (object_type == 'rectangle') {
-        let rectangle = { id: event.target.id, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.width,};
+        let rectangle = { id: event.target.id, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.stroke_width,};
         post_rectangle(rectangle);
     } else if (object_type == 'circle') {
-        let circle = { id: event.target.id, radius:event.target.radius, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.width,};
+        let circle = { id: event.target.id, radius:event.target.radius, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.stroke_width,};
         post_circle(circle);
     } else if (object_type == 'triangle') {
-        let triangle = { id: event.target.id, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.width,};;
+        let triangle = { id: event.target.id, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.stroke_width,};;
         post_triangle(triangle);
     }
 
@@ -308,9 +326,6 @@ let create_default_text = function() {
         .then(async function (response) {
             let text_box = response.data;
             let data = Object.assign(object, text_box);
-            console.log(`Object data: ${JSON.stringify(object)}`)
-            console.log(`Text box data: ${JSON.stringify(text_box)}`)
-            console.log(`Response data merged: ${JSON.stringify(data)}`)
             render_text_box(data);
         })
         .catch(function (error) {  
@@ -321,6 +336,92 @@ let create_default_text = function() {
         console.error(error);  
     });
 }
+
+let create_default_image = function() {
+    return console.error("Not yet implemented");
+
+    // axios.post( `/page_objects`, { "page_id": page.id, "object_type": "image"})
+    // .then(async function (response) {
+    //     let object = response.data;
+    //     axios.post( `/images`, { "object_id": object.id })
+    //     .then(async function (response) {
+    //         let image = response.data;
+    //         let data = Object.assign(object, image);
+    //         render_image(data);
+    //     })
+    //     .catch(function (error) {  
+    //         console.error(error);  
+    //     });
+    // })
+    // .catch(function (error) {  
+    //     console.error(error);  
+    // });
+}
+
+let create_default_rectangle = function() {
+    axios.post( `/page_objects`, { "page_id": page.id, "object_type": "rectangle"})
+    .then(async function (response) {
+        let object = response.data;
+        console.log(JSON.stringify(object.id));
+        axios.post( `/rectangles`, { "object_id": object.id })
+        .then(async function (response) {
+            console.log(response);
+            let rectangle = response.data;
+            let data = Object.assign(object, rectangle);
+            render_rectangle(data);
+        })
+        .catch(function (error) {  
+            console.error(error);  
+        });
+    })
+    .catch(function (error) {  
+        console.error(error);  
+    });
+}
+
+let create_default_circle = function() {
+    axios.post( `/page_objects`, { "page_id": page.id, "object_type": "circle"})
+    .then(async function (response) {
+        let object = response.data;
+        console.log(JSON.stringify(object.id));
+        axios.post( `/circles`, { "object_id": object.id })
+        .then(async function (response) {
+            console.log(response);
+            let circle = response.data;
+            let data = Object.assign(object, circle);
+            render_circle(data);
+        })
+        .catch(function (error) {  
+            console.error(error);  
+        });
+    })
+    .catch(function (error) {  
+        console.error(error);  
+    });
+}
+
+let create_default_triangle = function() {
+    axios.post( `/page_objects`, { "page_id": page.id, "object_type": "triangle"})
+    .then(async function (response) {
+        let object = response.data;
+        console.log(JSON.stringify(object.id));
+        axios.post( `/triangles`, { "object_id": object.id })
+        .then(async function (response) {
+            console.log(response);
+            let triangle = response.data;
+            let data = Object.assign(object, triangle);
+            render_triangle(data);
+        })
+        .catch(function (error) {  
+            console.error(error);  
+        });
+    })
+    .catch(function (error) {  
+        console.error(error);  
+    });
+}
+
+
 
 let delete_object = function(object) {
     let object_data = { id: object.object_id, page_id: page.id, angle: object.angle, object_type: object.object_type, pos_x: object.left, pos_y: object.top };

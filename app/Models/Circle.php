@@ -9,7 +9,6 @@ class Circle extends Model
 {
     use HasFactory;
 
-
     /**
      * The attributes that are mass assignable.
      *
@@ -17,6 +16,7 @@ class Circle extends Model
     */
     protected $fillable = [
         'id',
+        'object_id',
         'fill',
         'radius',
         'stroke',
