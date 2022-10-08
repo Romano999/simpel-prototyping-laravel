@@ -13,6 +13,7 @@ return new class extends Migration
             $table->foreignId('page_id')->references('id')->on('pages')->onDelete('cascade');
             $table->integer("pos_x")->default(100);
             $table->integer("pos_y")->default(100);
+            $table->integer("z_index")->default(0);
             $table->integer('angle')->default(0);
             $table->integer('height')->default(100);
             $table->integer('width')->default(100);

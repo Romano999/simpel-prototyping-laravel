@@ -159,8 +159,10 @@ let render_image = function(pageObject) {
                 height: pageObject.height,
                 width: pageObject.width,
                 object_id: pageObject.object_id,
+                z_index: pageObject.z_index,
             });
             canvas.add(oImg);
+            z_index_placement(oImg);
         }
     });
 }
@@ -177,12 +179,13 @@ let render_text_box = function(pageObject) {
         height: pageObject.height,
         width: pageObject.width,
         object_type: pageObject.object_type,
+        z_index: pageObject.z_index,
     });
 
     // Render the Text on Canvas
     canvas.add(text);
-
-    canvas.setActiveObject(text);
+    z_index_placement(text);
+    // canvas.setActiveObject(text);
 }
 
 let render_rectangle = function(pageObject) {
@@ -198,9 +201,11 @@ let render_rectangle = function(pageObject) {
         stroke: pageObject.stroke,
         stroke_width: pageObject.stroke_width,
         object_type: pageObject.object_type,
+        z_index: pageObject.z_index,
     });
 
     canvas.add(rectangle);
+    z_index_placement(rectangle);
 }
 
 let render_circle = function(pageObject) {
@@ -217,9 +222,11 @@ let render_circle = function(pageObject) {
         stroke: pageObject.stroke,
         stroke_width: pageObject.stroke_width,
         object_type: pageObject.object_type,
+        z_index: pageObject.z_index,
     });
 
     canvas.add(circle);
+    z_index_placement(circle);
 }
 
 let render_triangle = function(pageObject) {
@@ -235,9 +242,11 @@ let render_triangle = function(pageObject) {
         stroke: pageObject.stroke,
         stroke_width: pageObject.stroke_width,
         object_type: pageObject.object_type,
+        z_index: pageObject.z_index,
     });
 
     canvas.add(triangle);
+    z_index_placement(triangle);
 }
 
 let post_object = function(event) {
@@ -252,6 +261,7 @@ let post_object = function(event) {
         pos_y: event.target.top,
         height: event.target.getScaledHeight(),
         width: event.target.getScaledWidth(),
+        z_index: event.target.z_index,
     };
 
     post_object_data(object_data)
@@ -519,12 +529,18 @@ let delete_object_data = function(object_data) {
     });
 }
 
-// let draw_shapes = function() {
-//     context.clearRect(0, 0, canvas_width, canvas_height);
+let z_index_placement = function(page_object) {
+    let z_index = page_object.z_index;
+    console.log(page_object)
+    console.log(`${page_object.object_type} has a z-index of ${z_index}`)
 
-//     for (let shape of shapes) {
-//         context.fillStyle = shape.color;
-//         context.fillRect(shape.x, shape.y, shape.width, shape.height);
-//     }
-// }
-
+    while (z_index != 0) {
+        if (z_index > 0) {
+            canvas.sendForward(page_object);
+            z_index--;
+        } else if (z_index < 0) {
+            canvas.sendBackwards(page_object);
+            z_index++;
+        }
+    }
+}

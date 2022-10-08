@@ -83,6 +83,7 @@ class PageObjectController extends Controller
         DB::table('page_objects')->where('id', $pageObject->id)->update([
             'pos_x' => $request->pos_x,
             'pos_y' => $request->pos_y,
+            'z_index' => $request->z_index,
             'angle' => $request->angle,
             'height' => $request->height,
             'width' => $request->width,
