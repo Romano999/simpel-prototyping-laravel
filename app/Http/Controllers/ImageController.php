@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
-use App\Models\PageObject;
 use App\Models\Image;
+use App\Models\PageObject;
 
 class ImageController extends Controller
 {
@@ -38,7 +38,7 @@ class ImageController extends Controller
      */
     public function store(StoreImageRequest $request)
     {
-        $data = new Image();
+        $data = new Image;
         $pageObjectId = PageObject::create([            
             'page_id' => 1,
             'object_type' => 'image',

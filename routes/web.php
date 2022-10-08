@@ -1,12 +1,12 @@
 <?php
 
+use App\Http\Controllers\CircleController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PageObjectController;
-use App\Http\Controllers\TextBoxController;
 use App\Http\Controllers\RectangleController;
-use App\Http\Controllers\CircleController;
+use App\Http\Controllers\TextBoxController;
 use App\Http\Controllers\TriangleController;
-use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
 
 /*

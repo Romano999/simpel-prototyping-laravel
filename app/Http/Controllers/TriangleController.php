@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Triangle;
 use App\Http\Requests\StoreTriangleRequest;
 use App\Http\Requests\UpdateTriangleRequest;
+use App\Models\Triangle;
 use Illuminate\Support\Facades\DB;
 
 class TriangleController extends Controller

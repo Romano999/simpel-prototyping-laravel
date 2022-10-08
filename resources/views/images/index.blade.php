@@ -8,9 +8,9 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($images as $data)
+        @foreach ($images as $data)
         <tr>
-          <td>{{$data->id}}</td>
+          <td>{{ $data->id }}</td>
           <td>
 	     <img src="{{ asset('media/'.$data->image) }}"
             style="height: 100px; width: 150px;">

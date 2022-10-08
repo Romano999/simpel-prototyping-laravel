@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Circle;
 use App\Http\Requests\StoreCircleRequest;
 use App\Http\Requests\UpdateCircleRequest;
+use App\Models\Circle;
 use Illuminate\Support\Facades\DB;
 
 class CircleController extends Controller

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rectangle;
 use App\Http\Requests\StoreRectangleRequest;
 use App\Http\Requests\UpdateRectangleRequest;
+use App\Models\Rectangle;
 use Illuminate\Support\Facades\DB;
 
 class RectangleController extends Controller
