@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePageObjectRequest extends FormRequest
+class StoreTriangleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class StorePageObjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'page_id' => 'required|numeric',
-            'object_type' => 'required',
+            //
         ];
     }
 }

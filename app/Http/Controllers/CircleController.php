@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTextBoxRequest;
-use App\Http\Requests\UpdateTextBoxRequest;
-use App\Models\TextBox;
+use App\Http\Requests\StoreCircleRequest;
+use App\Http\Requests\UpdateCircleRequest;
+use App\Models\Circle;
 use Illuminate\Support\Facades\DB;
 
-class TextBoxController extends Controller
+class CircleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,25 +32,25 @@ class TextBoxController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreTextBoxRequest  $request
+     * @param  \App\Http\Requests\StoreCircleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTextBoxRequest $request)
+    public function store(StoreCircleRequest $request)
     {
-        $textBox = TextBox::create([
+        $circle = Circle::create([
             'object_id' => $request->object_id,
         ]);
 
-        return DB::table('text_boxes')->where('id', $textBox->id)->get()[0];
+        return DB::table('circles')->where('id', $circle->id)->get()[0];
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TextBox  $textBox
+     * @param  \App\Models\Circle  $circle
      * @return \Illuminate\Http\Response
      */
-    public function show(TextBox $textBox)
+    public function show(Circle $circle)
     {
         //
     }
@@ -58,10 +58,10 @@ class TextBoxController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TextBox  $textBox
+     * @param  \App\Models\Circle  $circle
      * @return \Illuminate\Http\Response
      */
-    public function edit(TextBox $textBox)
+    public function edit(Circle $circle)
     {
         //
     }
@@ -69,28 +69,29 @@ class TextBoxController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateTextBoxRequest  $request
-     * @param  \App\Models\TextBox  $textBox
+     * @param  \App\Http\Requests\UpdateCircleRequest  $request
+     * @param  \App\Models\Circle  $circle
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTextBoxRequest $request, TextBox $textBox)
+    public function update(UpdateCircleRequest $request, Circle $circle)
     {
-        DB::table('text_boxes')->where('id', $textBox->id)->update([
-            'text' => $request->text,
-        ]);
+        $data = $request->validated();
 
-        return;
+        if (is_null($data['fill'])) {
+            $data['fill'] = "";
+        }
+
+        return $circle->update($data);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TextBox  $textBox
+     * @param  \App\Models\Circle  $circle
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TextBox $textBox)
+    public function destroy(Circle $circle)
     {
-        return 'test';
-        // return DB::table('page_objects')->delete($textBox->id);
+        //
     }
 }

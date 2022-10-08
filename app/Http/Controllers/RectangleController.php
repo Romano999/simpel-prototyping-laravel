@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTextBoxRequest;
-use App\Http\Requests\UpdateTextBoxRequest;
-use App\Models\TextBox;
+use App\Http\Requests\StoreRectangleRequest;
+use App\Http\Requests\UpdateRectangleRequest;
+use App\Models\Rectangle;
 use Illuminate\Support\Facades\DB;
 
-class TextBoxController extends Controller
+class RectangleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,25 +32,25 @@ class TextBoxController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreTextBoxRequest  $request
+     * @param  \App\Http\Requests\StoreRectangleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTextBoxRequest $request)
+    public function store(StoreRectangleRequest $request)
     {
-        $textBox = TextBox::create([
+        $rectangle = Rectangle::create([
             'object_id' => $request->object_id,
         ]);
 
-        return DB::table('text_boxes')->where('id', $textBox->id)->get()[0];
+        return DB::table('rectangles')->where('id', $rectangle->id)->get()[0];
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TextBox  $textBox
+     * @param  \App\Models\Rectangle  $rectangle
      * @return \Illuminate\Http\Response
      */
-    public function show(TextBox $textBox)
+    public function show(Rectangle $rectangle)
     {
         //
     }
@@ -58,10 +58,10 @@ class TextBoxController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TextBox  $textBox
+     * @param  \App\Models\Rectangle  $rectangle
      * @return \Illuminate\Http\Response
      */
-    public function edit(TextBox $textBox)
+    public function edit(Rectangle $rectangle)
     {
         //
     }
@@ -69,28 +69,29 @@ class TextBoxController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateTextBoxRequest  $request
-     * @param  \App\Models\TextBox  $textBox
+     * @param  \App\Http\Requests\UpdateRectangleRequest  $request
+     * @param  \App\Models\Rectangle  $rectangle
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTextBoxRequest $request, TextBox $textBox)
+    public function update(UpdateRectangleRequest $request, Rectangle $rectangle)
     {
-        DB::table('text_boxes')->where('id', $textBox->id)->update([
-            'text' => $request->text,
-        ]);
+        $data = $request->validated();
 
-        return;
+        if (is_null($data['fill'])) {
+            $data['fill'] = "";
+        }
+
+        return $rectangle->update($data);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TextBox  $textBox
+     * @param  \App\Models\Rectangle  $rectangle
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TextBox $textBox)
+    public function destroy(Rectangle $rectangle)
     {
-        return 'test';
-        // return DB::table('page_objects')->delete($textBox->id);
+        //
     }
 }

@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
             PageObjectSeeder::class,
             TextBoxSeeder::class,
             ImageSeeder::class,
+            RectangleSeeder::class,
+            CircleSeeder::class,
+            TriangleSeeder::class,
         ]);
     }
 }

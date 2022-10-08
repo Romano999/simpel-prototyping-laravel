@@ -8,16 +8,18 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('triangles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('object_id')->references('id')->on('page_objects')->onDelete('cascade');
-            $table->string('image')->nullable();
+            $table->string('fill')->default('');
+            $table->string('stroke')->default('red');
+            $table->integer('stroke_width')->default(2);
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('triangles');
     }
 };

@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\TextBox;
+use App\Models\Triangle;
 use Illuminate\Database\Seeder;
 
-class TextBoxSeeder extends Seeder
+class TriangleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,9 +14,8 @@ class TextBoxSeeder extends Seeder
      */
     public function run()
     {
-        TextBox::factory()->create([
-            'object_id' => 1,
-            "text" => "Hello world!",
+        Triangle::factory()->create([
+            'object_id' => 5,
         ]);
     }
 }

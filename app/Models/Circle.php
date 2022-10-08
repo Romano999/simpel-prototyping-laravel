@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TextBox extends Model
+class Circle extends Model
 {
     use HasFactory;
 
@@ -15,6 +15,11 @@ class TextBox extends Model
      * @var string[]
     */
     protected $fillable = [
+        'id',
         'object_id',
+        'fill',
+        'radius',
+        'stroke',
+        'stroke_width',
     ];
 }

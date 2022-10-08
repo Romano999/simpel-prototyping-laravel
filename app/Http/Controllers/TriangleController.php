@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTextBoxRequest;
-use App\Http\Requests\UpdateTextBoxRequest;
-use App\Models\TextBox;
+use App\Http\Requests\StoreTriangleRequest;
+use App\Http\Requests\UpdateTriangleRequest;
+use App\Models\Triangle;
 use Illuminate\Support\Facades\DB;
 
-class TextBoxController extends Controller
+class TriangleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,25 +32,25 @@ class TextBoxController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreTextBoxRequest  $request
+     * @param  \App\Http\Requests\StoreTriangleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTextBoxRequest $request)
+    public function store(StoreTriangleRequest $request)
     {
-        $textBox = TextBox::create([
+        $triangle = Triangle::create([
             'object_id' => $request->object_id,
         ]);
 
-        return DB::table('text_boxes')->where('id', $textBox->id)->get()[0];
+        return DB::table('triangles')->where('id', $triangle->id)->get()[0];
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TextBox  $textBox
+     * @param  \App\Models\Triangle  $triangle
      * @return \Illuminate\Http\Response
      */
-    public function show(TextBox $textBox)
+    public function show(Triangle $triangle)
     {
         //
     }
@@ -58,10 +58,10 @@ class TextBoxController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TextBox  $textBox
+     * @param  \App\Models\Triangle  $triangle
      * @return \Illuminate\Http\Response
      */
-    public function edit(TextBox $textBox)
+    public function edit(Triangle $triangle)
     {
         //
     }
@@ -69,28 +69,29 @@ class TextBoxController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateTextBoxRequest  $request
-     * @param  \App\Models\TextBox  $textBox
+     * @param  \App\Http\Requests\UpdateTriangleRequest  $request
+     * @param  \App\Models\Triangle  $triangle
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTextBoxRequest $request, TextBox $textBox)
+    public function update(UpdateTriangleRequest $request, Triangle $triangle)
     {
-        DB::table('text_boxes')->where('id', $textBox->id)->update([
-            'text' => $request->text,
-        ]);
+        $data = $request->validated();
 
-        return;
+        if (is_null($data['fill'])) {
+            $data['fill'] = "";
+        }
+
+        return $triangle->update($data);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TextBox  $textBox
+     * @param  \App\Models\Triangle  $triangle
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TextBox $textBox)
+    public function destroy(Triangle $triangle)
     {
-        return 'test';
-        // return DB::table('page_objects')->delete($textBox->id);
+        //
     }
 }

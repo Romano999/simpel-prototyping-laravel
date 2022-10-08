@@ -16,7 +16,6 @@ class PageObject extends Model
     */
     protected $fillable = [
         'page_id',
-        'pos_x',
-        'pos_y',
+        'object_type',
     ];
 }

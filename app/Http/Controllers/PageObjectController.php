@@ -37,7 +37,16 @@ class PageObjectController extends Controller
      */
     public function store(StorePageObjectRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $pageObject = PageObject::create([
+            'page_id' => $request->page_id,
+            'object_type' => $request->object_type,
+        ]);
+
+        // $data->id = $id;
+
+        return DB::table('page_objects')->where('id', $pageObject->id)->get()[0];;
     }
 
     /**
@@ -71,13 +80,13 @@ class PageObjectController extends Controller
      */
     public function update(UpdatePageObjectRequest $request, PageObject $pageObject)
     {
-        $data = $request->validated();
-        $pageObject->update($data);
-
         DB::table('page_objects')->where('id', $pageObject->id)->update([
             'pos_x' => $request->pos_x,
             'pos_y' => $request->pos_y,
+            'z_index' => $request->z_index,
             'angle' => $request->angle,
+            'height' => $request->height,
+            'width' => $request->width,
         ]);
 
         return;
@@ -91,6 +100,6 @@ class PageObjectController extends Controller
      */
     public function destroy(PageObject $pageObject)
     {
-        //
+        return DB::table('page_objects')->delete($pageObject->id);
     }
 }

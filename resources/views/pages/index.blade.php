@@ -12,31 +12,33 @@
                     <div>
                         <x-link href="{{ route('pages.create') }}" class="m-4">Create a new page!</x-link>
                     </div>
-                    @forelse ($pages as $page)
-                    <div class="inline-grid grid-cols-3 gap-3 items-center">
-                        <div class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                            {{ $page->name }}
-                        </div>
+                    <div class='flex flex-col'>
+                        @forelse ($pages as $page)
+                        <div class="inline-grid grid-cols-3 gap-3 items-center">
+                            <div class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                {{ $page->name }}
+                            </div>
 
-                        <div>
-                            <x-link href="{{ route('pages.edit', $page) }}">Edit</x-link>
+                            <div>
+                                <x-link href="{{ route('pages.edit', $page) }}">Edit</x-link>
+                            </div>
+                            
+                            <div class="px-6 py-4">                
+                                <form method="POST" action="{{ route('pages.destroy', $page) }}" class="inline-block">                    
+                                    @csrf
+                                    @method('DELETE')                    
+                                    <x-jet-danger-button                    
+                                        type="submit"                    
+                                        onclick="return confirm('Are you sure?')">Delete</x-jet-danger-button>                    
+                                </form>                    
+                            </div>
                         </div>
-                        
-                        <div class="px-6 py-4">                
-                            <form method="POST" action="{{ route('pages.destroy', $page) }}" class="inline-block">                    
-                                @csrf
-                                @method('DELETE')                    
-                                <x-jet-danger-button                    
-                                    type="submit"                    
-                                    onclick="return confirm('Are you sure?')">Delete</x-jet-danger-button>                    
-                            </form>                    
+                        @empty
+                        <div class="py-3 px-4">
+                            No pages found!
                         </div>
+                        @endforelse
                     </div>
-                    @empty
-                    <div>
-                        No pages found!
-                    </div>
-                    @endforelse
                 </div>
             </div>
         </div>
