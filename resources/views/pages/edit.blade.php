@@ -24,22 +24,54 @@
                             <div class="overflow-hidden relative shadow-md sm:rounded-lg px-4 py-4">  
                                 <canvas id="canvas" class="absolute" width="1000" height="1000"></canvas>
                                 {{-- Canvas Item Editor --}}
-                                <div id="canvas-edit" class="absolute top-10 left-10" >
-                                    <div>
-                                        <label for="text-font-size">Font size:</label>
-                                        <input type="range" value="" min="1" max="120" step="1" id="text-font-size">
+                                <div id="canvas-editor">
+                                    <div id="canvas-edit-text" class="absolute top-10 left-10" >
+                                        <div>
+                                            <label for="text-font-size">Font size:</label>
+                                            <input type="range" value="" min="1" max="120" step="1" id="text-font-size">
+                                        </div>
+                                        <div>
+                                            <x-jet-button id="delete-text-button" class="flex-1">
+                                                {{ __('Delete text') }}
+                                            </x-jet-button>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <x-jet-button id="delete-text-button" class="flex-1">
-                                            {{ __('Delete text') }}
-                                        </x-jet-button>
+                                    <div id="canvas-edit-image" class="absolute top-10 left-10" >
+                                        <div>
+
+                                            <x-jet-button id="delete-image-button" class="flex-1">
+                                                {{ __('Delete image') }}
+                                            </x-jet-button>
+                                        </div>
+                                    </div>
+                                    <div id="canvas-edit-rectangle" class="absolute top-10 left-10" >
+                                        <div>
+                                            <x-jet-button id="delete-rectangle-button" class="flex-1">
+                                                {{ __('Delete rectangle') }}
+                                            </x-jet-button>
+                                        </div>
+                                    </div>
+                                    <div id="canvas-edit-circle" class="absolute top-10 left-10" >
+                                        <div>
+                                            <x-jet-button id="delete-circle-button" class="flex-1">
+                                                {{ __('Delete circle') }}
+                                            </x-jet-button>
+                                        </div>
+                                    </div>
+                                    <div id="canvas-edit-triangle" class="absolute top-10 left-10" >
+                                        <div>
+                                            <x-jet-button id="delete-triangle-button" class="flex-1">
+                                                {{ __('Delete triangle') }}
+                                            </x-jet-button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg absolute bottom-10 right-10">
+                                {{-- Canvas Item Creator --}}
+                                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg absolute top-10 right-10">
                                     <div>
-                                        <h1>{{ __('Create new objects') }}</h1>
+                                        <h1 class="px-4 bold">{{ __('Create new objects') }}</h1>
                                     </div>
-                                    <div class="flex shadow-md sm:rounded-lg px-4 py-4">  
+                                    <div class="flex flex-col shadow-md sm:rounded-lg px-4 py-2 gap-2">  
                                         <x-jet-button id="create-text-button" class="flex-1">
                                             {{ __('Create text') }}
                                         </x-jet-button>

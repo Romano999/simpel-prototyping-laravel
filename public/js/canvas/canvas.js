@@ -25,17 +25,34 @@ window.addEventListener('DOMContentLoaded', (event) => {
         render(pageObject);
     }
 
+    // Gather all editor divs
+    editor_divs = []; 
+    editor_divs.push(document.getElementById('canvas-edit-text'));
+    editor_divs.push(document.getElementById('canvas-edit-image'));
+    editor_divs.push(document.getElementById('canvas-edit-rectangle'));
+    editor_divs.push(document.getElementById('canvas-edit-circle'));
+    editor_divs.push(document.getElementById('canvas-edit-triangle'))
+
+    console.log(editor_divs)
+
     canvas.on('mouse:down', function(event){
         if (event.target) {
             selectedObject = event.target;
-            document.getElementById('canvas-edit').style.display = 'block';
+            for (element of editor_divs) {
+                element.style.display = 'none';
+            }
+            document.getElementById('canvas-editor').style.display = 'block';
+            display_canvas_edit(selectedObject);
         } else  {
             panning = true;
             selectedObject = null;
-            document.getElementById('canvas-edit').style.display = 'none';
+            document.getElementById('canvas-editor').style.display = 'none';
         }
     });
+
+    document.getElementById('canvas-editor').style.display = 'none';
     
+    // Create default page objects
     document.getElementById('create-text-button').onclick = function() {
         create_default_text()
     };
@@ -56,6 +73,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         create_default_triangle()
     };
 
+    // Canvas editor related
     document.getElementById('text-font-size').onchange = function() {
         canvas.getActiveObject().set("fontSize", this.value);
         canvas.renderAll();
@@ -130,6 +148,22 @@ window.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
+let display_canvas_edit = function(page_object) {
+    let object_type = page_object.object_type;
+
+    if (object_type == 'text_box') {
+        document.getElementById('canvas-edit-text').style.display = 'block';
+    } else if (object_type == 'image') {
+        document.getElementById('canvas-edit-image').style.display = 'block';
+    } else if (object_type == 'rectangle') {
+        document.getElementById('canvas-edit-rectangle').style.display = 'block';
+    } else if (object_type == 'circle') {
+        document.getElementById('canvas-edit-circle').style.display = 'block';
+    } else if (object_type == 'triangle') {
+        document.getElementById('canvas-edit-triangle').style.display = 'block';
+    }
+}
+
 let render = function(pageObject) {
     let object_type = pageObject.object_type;
 
@@ -159,6 +193,7 @@ let render_image = function(pageObject) {
                 height: pageObject.height,
                 width: pageObject.width,
                 object_id: pageObject.object_id,
+                object_type: pageObject.object_type,
                 z_index: pageObject.z_index,
             });
             canvas.add(oImg);
@@ -305,6 +340,10 @@ let post_text_box = function(text_box) {
     }).catch(function (error) {  
         console.error(error);  
     });
+}
+
+let post_image = function() {
+    console.error("Not implemented yet!");
 }
 
 let post_rectangle = function(rectangle) {
