@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('object_id')->references('id')->on('page_objects')->onDelete('cascade');
             $table->string("text")->default("Hello world!")->nullable(true);
-            $table->string("font")->default("10px sans-serif");
+            $table->integer("font_size")->default(11);
             $table->timestamps();
         });
     }

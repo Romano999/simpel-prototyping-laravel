@@ -207,7 +207,7 @@ let render_text_box = function(pageObject) {
     var text = new fabric.Textbox(pageObject.text, {
         id: pageObject.id,
         object_id: pageObject.object_id,
-        font: pageObject.font,
+        fontSize: pageObject.font_size,
         left: pageObject.pos_x,
         top: pageObject.pos_y,
         angle: pageObject.angle,
@@ -304,7 +304,7 @@ let post_object = function(event) {
     console.log(`${event.target}`)
 
     if (object_type === 'text_box') {
-        let text_box = { id: event.target.id, text: event.target.text, }
+        let text_box = { id: event.target.id, text: event.target.text, font_size: event.target.fontSize }
         post_text_box(text_box)
     } else if (object_type == 'image') {
         let image = {};

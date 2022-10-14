@@ -77,6 +77,7 @@ class TextBoxController extends Controller
     {
         DB::table('text_boxes')->where('id', $textBox->id)->update([
             'text' => $request->text,
+            'font_size' => $request->font_size,
         ]);
 
         return;
