@@ -91,7 +91,6 @@ class TextBoxController extends Controller
      */
     public function destroy(TextBox $textBox)
     {
-        return 'test';
         // return DB::table('page_objects')->delete($textBox->id);
     }
 }

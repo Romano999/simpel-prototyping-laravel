@@ -73,13 +73,45 @@ window.addEventListener('DOMContentLoaded', (event) => {
         create_default_triangle()
     };
 
-    // Canvas editor related
+    // Canvas editor object setting
     document.getElementById('text-font-size').onchange = function() {
-        canvas.getActiveObject().set("fontSize", this.value);
+        canvas.getActiveObject().set("fontSize", parseInt(this.value));
         canvas.renderAll();
     };
 
+    document.getElementById('rectangle-stroke-width').onchange = function() {
+        canvas.getActiveObject().set("strokeWidth", parseInt(this.value));
+        canvas.renderAll();
+    };
+
+    document.getElementById('circle-stroke-width').onchange = function() {
+        canvas.getActiveObject().set("strokeWidth", parseInt(this.value));
+        canvas.renderAll();
+    };
+
+    document.getElementById('triangle-stroke-width').onchange = function() {
+        canvas.getActiveObject().set("strokeWidth", parseInt(this.value));
+        canvas.renderAll();
+    };
+
+    // Canvas editor delete object
     document.getElementById('delete-text-button').onclick = function() {
+        delete_object(canvas.getActiveObject());
+    };
+
+    document.getElementById('delete-image-button').onclick = function() {
+        delete_object(canvas.getActiveObject());
+    };
+
+    document.getElementById('delete-rectangle-button').onclick = function() {
+        delete_object(canvas.getActiveObject());
+    };
+
+    document.getElementById('delete-circle-button').onclick = function() {
+        delete_object(canvas.getActiveObject());
+    };
+
+    document.getElementById('delete-triangle-button').onclick = function() {
         delete_object(canvas.getActiveObject());
     };
 
@@ -215,6 +247,8 @@ let render_text_box = function(pageObject) {
         width: pageObject.width,
         object_type: pageObject.object_type,
         z_index: pageObject.z_index,
+        noScaleCache: false,
+        strokeUniform: true,
     });
 
     // Render the Text on Canvas
@@ -234,10 +268,13 @@ let render_rectangle = function(pageObject) {
         width: pageObject.width,
         fill: pageObject.fill,
         stroke: pageObject.stroke,
-        stroke_width: pageObject.stroke_width,
+        strokeWidth: pageObject.stroke_width,
         object_type: pageObject.object_type,
         z_index: pageObject.z_index,
+        padding: 0,
     });
+
+    console.log(`Rectangle render: ${JSON.stringify(rectangle)}`)
 
     canvas.add(rectangle);
     z_index_placement(rectangle);
@@ -255,7 +292,7 @@ let render_circle = function(pageObject) {
         radius: pageObject.radius,
         fill: pageObject.fill,
         stroke: pageObject.stroke,
-        stroke_width: pageObject.stroke_width,
+        strokeWidth: pageObject.stroke_width,
         object_type: pageObject.object_type,
         z_index: pageObject.z_index,
     });
@@ -275,7 +312,7 @@ let render_triangle = function(pageObject) {
         width: pageObject.width,
         fill: pageObject.fill,
         stroke: pageObject.stroke,
-        stroke_width: pageObject.stroke_width,
+        strokeWidth: pageObject.stroke_width,
         object_type: pageObject.object_type,
         z_index: pageObject.z_index,
     });
@@ -294,8 +331,8 @@ let post_object = function(event) {
         object_type: event.target.object_type, 
         pos_x: event.target.left, 
         pos_y: event.target.top,
-        height: event.target.getScaledHeight(),
-        width: event.target.getScaledWidth(),
+        height: event.target.height,
+        width: event.target.width,
         z_index: event.target.z_index,
     };
 
@@ -310,13 +347,13 @@ let post_object = function(event) {
         let image = {};
         post_image(image);
     } else if (object_type == 'rectangle') {
-        let rectangle = { id: event.target.id, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.stroke_width,};
+        let rectangle = { id: event.target.id, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.strokeWidth,};
         post_rectangle(rectangle);
     } else if (object_type == 'circle') {
-        let circle = { id: event.target.id, radius:event.target.radius, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.stroke_width,};
+        let circle = { id: event.target.id, radius:event.target.radius, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.strokeWidth,};
         post_circle(circle);
     } else if (object_type == 'triangle') {
-        let triangle = { id: event.target.id, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.stroke_width,};;
+        let triangle = { id: event.target.id, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.strokeWidth,};;
         post_triangle(triangle);
     }
 
@@ -535,13 +572,26 @@ let create_default_triangle = function() {
 
 
 let delete_object = function(object) {
+    let object_type = object.object_type;
     let object_data = { id: object.object_id, page_id: page.id, angle: object.angle, object_type: object.object_type, pos_x: object.left, pos_y: object.top };
+    delete_object_data(object_data)
 
-    if (object.object_type === 'text_box') {
-        let text_box = { id: object.id, text: object.text, }
-        delete_text_box(text_box)
-        delete_object_data(object_data)
-    }
+    // if (object_type === 'text_box') {
+    //     let text_box = { id: object.id, text: object.text, }
+    //     delete_text_box(text_box)
+    // } else if (object_type == 'image') {
+    //     let image = {};
+    //     delete_image(image);
+    // } else if (object_type == 'rectangle') {
+    //     let rectangle = { id: object.id, fill: object.fill, stroke: object.stroke, stroke_width: object.strokeWidth,};
+    //     delete_rectangle(rectangle);
+    // } else if (object_type == 'circle') {
+    //     let circle = { id: object.id, radius:object.radius, fill: object.fill, stroke: object.stroke, stroke_width: object.strokeWidth,};
+    //     delete_circle(circle);
+    // } else if (object_type == 'triangle') {
+    //     let triangle = { id: object.id, fill: object.fill, stroke: object.stroke, stroke_width: object.strokeWidth,};;
+    //     delete_triangle(triangle);
+    // }
 
     canvas.remove(object);
 }
@@ -556,6 +606,44 @@ let delete_text_box = function(text_box) {
         console.error(error);  
     });
 }
+
+// let delete_image = function(image) {
+//     console.error("Not implemented yet!");
+// }
+
+// let delete_rectangle = function(rectangle) {
+//     axios.delete(
+//         `/rectangles/${rectangle.id}`, 
+//         rectangle,
+//     ).then(async function (response) {
+//         console.log(await response);
+//     }).catch(function (error) {  
+//         console.error(error);  
+//     });
+// }
+
+// let delete_triangle = function(triangle) {
+//     axios.delete(
+//         `/triangles/${triangle.id}`, 
+//         triangle,
+//     ).then(async function (response) {
+//         console.log(await response);
+//     }).catch(function (error) {  
+//         console.error(error);  
+//     });
+// }
+
+// let delete_circle = function(circle) {
+//     axios.delete(
+//         `/circles/${circle.id}`, 
+//         circle,
+//     ).then(async function (response) {
+//         console.log(await response);
+//     }).catch(function (error) {  
+//         console.error(error);  
+//     });
+// }
+
 
 let delete_object_data = function(object_data) {
     axios.delete(

@@ -28,7 +28,11 @@
                                     <div id="canvas-edit-text" class="absolute top-10 left-10" >
                                         <div>
                                             <label for="text-font-size">Font size:</label>
-                                            <input type="range" value="" min="1" max="120" step="1" id="text-font-size">
+                                            <input type="number" value="" step="1" id="text-font-size">
+                                        </div>
+                                        <div>
+                                            <label for="text-z-index">Z-index:</label>
+                                            <input type="number" value="" step="1" id="text-z-index">
                                         </div>
                                         <div>
                                             <x-jet-button id="delete-text-button" class="flex-1">
@@ -38,13 +42,24 @@
                                     </div>
                                     <div id="canvas-edit-image" class="absolute top-10 left-10" >
                                         <div>
-
+                                            <label for="image-z-index">Z-index:</label>
+                                            <input type="number" value="" step="1" id="image-z-index">
+                                        </div>
+                                        <div>
                                             <x-jet-button id="delete-image-button" class="flex-1">
                                                 {{ __('Delete image') }}
                                             </x-jet-button>
                                         </div>
                                     </div>
                                     <div id="canvas-edit-rectangle" class="absolute top-10 left-10" >
+                                        <div>
+                                            <label for="rectangle-z-index">Z-index:</label>
+                                            <input type="number" value="" step="1" id="rectangle-z-index">
+                                        </div>
+                                        <div>
+                                            <label for="rectangle-stroke-width">Stroke width</label>
+                                            <input type="number" value="" step="1" id="rectangle-stroke-width">
+                                        </div>
                                         <div>
                                             <x-jet-button id="delete-rectangle-button" class="flex-1">
                                                 {{ __('Delete rectangle') }}
@@ -53,12 +68,28 @@
                                     </div>
                                     <div id="canvas-edit-circle" class="absolute top-10 left-10" >
                                         <div>
+                                            <label for="circle-z-index">Z-index:</label>
+                                            <input type="number" value="" step="1" id="circle-z-index">
+                                        </div>
+                                        <div>
+                                            <label for="circle-stroke-width">Stroke width</label>
+                                            <input type="number" value="" step="1" id="circle-stroke-width">
+                                        </div>
+                                        <div>
                                             <x-jet-button id="delete-circle-button" class="flex-1">
                                                 {{ __('Delete circle') }}
                                             </x-jet-button>
                                         </div>
                                     </div>
                                     <div id="canvas-edit-triangle" class="absolute top-10 left-10" >
+                                        <div>
+                                            <label for="triangle-z-index">Z-index:</label>
+                                            <input type="number" value="" step="1" id="triangle-z-index">
+                                        </div>
+                                        <div>
+                                            <label for="triangle-stroke-width">Stroke width</label>
+                                            <input type="number" value="" step="1" id="triangle-stroke-width">
+                                        </div>
                                         <div>
                                             <x-jet-button id="delete-triangle-button" class="flex-1">
                                                 {{ __('Delete triangle') }}
