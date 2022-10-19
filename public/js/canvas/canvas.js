@@ -18,8 +18,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // Create a new instance of Canvas
     canvas = new fabric.Canvas("canvas");
 
-    console.log(`Object type: ${JSON.stringify(pageObjects)} found.`)
-
     // Render all page objects
     for (let pageObject of pageObjects) {
         render(pageObject);
@@ -32,8 +30,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     editor_divs.push(document.getElementById('canvas-edit-rectangle'));
     editor_divs.push(document.getElementById('canvas-edit-circle'));
     editor_divs.push(document.getElementById('canvas-edit-triangle'))
-
-    console.log(editor_divs)
 
     canvas.on('mouse:down', function(event){
         if (event.target) {
@@ -76,21 +72,57 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // Canvas editor object setting
     document.getElementById('text-font-size').onchange = function() {
         canvas.getActiveObject().set("fontSize", parseInt(this.value));
+        post_object(canvas.getActiveObject());
         canvas.renderAll();
     };
 
     document.getElementById('rectangle-stroke-width').onchange = function() {
         canvas.getActiveObject().set("strokeWidth", parseInt(this.value));
+        post_object(canvas.getActiveObject());
         canvas.renderAll();
     };
 
     document.getElementById('circle-stroke-width').onchange = function() {
         canvas.getActiveObject().set("strokeWidth", parseInt(this.value));
+        post_object(canvas.getActiveObject());
         canvas.renderAll();
     };
 
     document.getElementById('triangle-stroke-width').onchange = function() {
         canvas.getActiveObject().set("strokeWidth", parseInt(this.value));
+        post_object(canvas.getActiveObject());
+        canvas.renderAll();
+    };
+
+
+    // Canvas edit z-index
+    document.getElementById('text-z-index').onchange = function() {
+        canvas.getActiveObject().set("z_index", parseInt(this.value));
+        post_object(canvas.getActiveObject());
+        canvas.renderAll();
+    };
+
+    document.getElementById('image-z-index').onchange = function() {
+        canvas.getActiveObject().set("z_index", parseInt(this.value));
+        post_object(canvas.getActiveObject());
+        canvas.renderAll();
+    };
+
+    document.getElementById('rectangle-z-index').onchange = function() {
+        canvas.getActiveObject().set("z_index", parseInt(this.value));
+        post_object(canvas.getActiveObject());
+        canvas.renderAll();
+    };
+
+    document.getElementById('circle-z-index').onchange = function() {
+        canvas.getActiveObject().set("z_index", parseInt(this.value));
+        post_object(canvas.getActiveObject());
+        canvas.renderAll();
+    };
+
+    document.getElementById('triangle-z-index').onchange = function() {
+        canvas.getActiveObject().set("z_index", parseInt(this.value));
+        post_object(canvas.getActiveObject());
         canvas.renderAll();
     };
 
@@ -118,6 +150,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // Canvas actions
     canvas.on('object:modified', function(event){
         post_object(event);
+        z_index_placement(event.target);
     });
 
     // Canvas Panning
@@ -185,14 +218,23 @@ let display_canvas_edit = function(page_object) {
 
     if (object_type == 'text_box') {
         document.getElementById('canvas-edit-text').style.display = 'block';
+        document.getElementById('text-font-size').value = page_object.fontSize;
+        document.getElementById('text-z-index').value = page_object.z_index;
     } else if (object_type == 'image') {
         document.getElementById('canvas-edit-image').style.display = 'block';
+        document.getElementById('image-z-index').value = page_object.z_index;
     } else if (object_type == 'rectangle') {
         document.getElementById('canvas-edit-rectangle').style.display = 'block';
+        document.getElementById('rectangle-stroke-width').value = page_object.strokeWidth;
+        document.getElementById('rectangle-z-index').value = page_object.z_index;
     } else if (object_type == 'circle') {
         document.getElementById('canvas-edit-circle').style.display = 'block';
+        document.getElementById('circle-stroke-width').value = page_object.strokeWidth;
+        document.getElementById('circle-z-index').value = page_object.z_index;
     } else if (object_type == 'triangle') {
         document.getElementById('canvas-edit-triangle').style.display = 'block';
+        document.getElementById('triangle-stroke-width').value = page_object.strokeWidth;
+        document.getElementById('triangle-z-index').value = page_object.z_index;
     }
 }
 
@@ -213,10 +255,9 @@ let render = function(pageObject) {
 }
 
 let render_image = function(pageObject) {
-    console.log(pageObject)
     fabric.Image.fromURL(`../../media/${pageObject.image}`, function(img, isError) {
         if (isError) {
-            console.log("Error occured!")
+            console.error("Error occured!")
         } else {
             let oImg = img.set({
                 left: pageObject.pos_x,  
@@ -247,8 +288,6 @@ let render_text_box = function(pageObject) {
         width: pageObject.width,
         object_type: pageObject.object_type,
         z_index: pageObject.z_index,
-        noScaleCache: false,
-        strokeUniform: true,
     });
 
     // Render the Text on Canvas
@@ -272,9 +311,8 @@ let render_rectangle = function(pageObject) {
         object_type: pageObject.object_type,
         z_index: pageObject.z_index,
         padding: 0,
+        strokeUniform: true,
     });
-
-    console.log(`Rectangle render: ${JSON.stringify(rectangle)}`)
 
     canvas.add(rectangle);
     z_index_placement(rectangle);
@@ -295,6 +333,8 @@ let render_circle = function(pageObject) {
         strokeWidth: pageObject.stroke_width,
         object_type: pageObject.object_type,
         z_index: pageObject.z_index,
+        padding: 0,
+        strokeUniform: true,
     });
 
     canvas.add(circle);
@@ -315,6 +355,8 @@ let render_triangle = function(pageObject) {
         strokeWidth: pageObject.stroke_width,
         object_type: pageObject.object_type,
         z_index: pageObject.z_index,
+        padding: 0,
+        strokeUniform: true,
     });
 
     canvas.add(triangle);
@@ -322,46 +364,54 @@ let render_triangle = function(pageObject) {
 }
 
 let post_object = function(event) {
-    let object_type = event.target.object_type;
-  
+    let object;
+    let object_type;
+
+    if (typeof event.target === "undefined") {
+        object = event;
+        object_type = event.object_type;
+    } else {
+        object = event.target;
+        object_type = event.target.object_type;
+    }
+
+    console.log(JSON.stringify(object))
+
     let object_data = { 
-        id: event.target.object_id, 
+        id: object.object_id, 
         page_id: page.id, 
-        angle: event.target.angle,
-        object_type: event.target.object_type, 
-        pos_x: event.target.left, 
-        pos_y: event.target.top,
-        height: event.target.height,
-        width: event.target.width,
-        z_index: event.target.z_index,
+        angle: object.angle,
+        object_type: object.object_type, 
+        pos_x: object.left, 
+        pos_y: object.top,
+        height: object.height * object.scaleY,
+        width: object.width * object.scaleX,
+        z_index: object.z_index,
     };
 
+    console.log(JSON.stringify(object_data))
     post_object_data(object_data)
 
-    console.log(`${event.target}`)
-
     if (object_type === 'text_box') {
-        let text_box = { id: event.target.id, text: event.target.text, font_size: event.target.fontSize }
+        let text_box = { id: object.id, text: object.text, font_size: object.fontSize }
         post_text_box(text_box)
     } else if (object_type == 'image') {
         let image = {};
         post_image(image);
     } else if (object_type == 'rectangle') {
-        let rectangle = { id: event.target.id, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.strokeWidth,};
+        let rectangle = { id: object.id, fill: object.fill, stroke: object.stroke, stroke_width: object.strokeWidth,};
         post_rectangle(rectangle);
     } else if (object_type == 'circle') {
-        let circle = { id: event.target.id, radius:event.target.radius, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.strokeWidth,};
+        let circle = { id: object.id, radius: object.radius * object.scaleX, fill: object.fill, stroke: object.stroke, stroke_width: object.strokeWidth,};
         post_circle(circle);
     } else if (object_type == 'triangle') {
-        let triangle = { id: event.target.id, fill: event.target.fill, stroke: event.target.stroke, stroke_width: event.target.strokeWidth,};;
+        let triangle = { id: object.id, fill: object.fill, stroke: object.stroke, stroke_width: object.strokeWidth,};;
         post_triangle(triangle);
     }
 
 }
 
 let post_text_box = function(text_box) {
-    console.log(`Textbox data: ${JSON.stringify(text_box)}`)
-
     let config = {
         headers: {
             'Content-Type': "application/json"
@@ -373,7 +423,6 @@ let post_text_box = function(text_box) {
         text_box,
         config
     ).then(async function (response) {
-        // console.log(await response);
     }).catch(function (error) {  
         console.error(error);  
     });
@@ -384,8 +433,6 @@ let post_image = function() {
 }
 
 let post_rectangle = function(rectangle) {
-    console.log(`Rectangle data: ${JSON.stringify(rectangle)}`)
-
     let config = {
         headers: {
             'Content-Type': "application/json"
@@ -397,15 +444,12 @@ let post_rectangle = function(rectangle) {
         rectangle,
         config
     ).then(async function (response) {
-        console.log(await response);
     }).catch(function (error) {  
         console.error(error);  
     });
 }
 
 let post_circle = function(circle) {
-    console.log(`Circle data: ${JSON.stringify(circle)}`)
-
     let config = {
         headers: {
             'Content-Type': "application/json"
@@ -417,15 +461,12 @@ let post_circle = function(circle) {
         circle,
         config
     ).then(async function (response) {
-        // console.log(await response);
     }).catch(function (error) {  
         console.error(error);  
     });
 }
 
 let post_triangle = function(triangle) {
-    console.log(`Triangle data: ${JSON.stringify(triangle)}`)
-
     let config = {
         headers: {
             'Content-Type': "application/json"
@@ -437,7 +478,6 @@ let post_triangle = function(triangle) {
         triangle,
         config
     ).then(async function (response) {
-        // console.log(await response);
     }).catch(function (error) {  
         console.error(error);  
     });
@@ -446,8 +486,6 @@ let post_triangle = function(triangle) {
 
 
 let post_object_data = function(object_data) {
-    console.log(`Object data: ${JSON.stringify(object_data)}`)
-
     let config = {
         headers: {
             'Content-Type': "application/json"
@@ -459,7 +497,6 @@ let post_object_data = function(object_data) {
         object_data,
         config
     ).then(async function (response) {
-        //console.log(await response);
     }).catch(function (error) {  
         console.error(error);  
     });
@@ -510,10 +547,8 @@ let create_default_rectangle = function() {
     axios.post( `/page_objects`, { "page_id": page.id, "object_type": "rectangle"})
     .then(async function (response) {
         let object = response.data;
-        console.log(JSON.stringify(object.id));
         axios.post( `/rectangles`, { "object_id": object.id })
         .then(async function (response) {
-            console.log(response);
             let rectangle = response.data;
             let data = Object.assign(object, rectangle);
             render_rectangle(data);
@@ -531,10 +566,8 @@ let create_default_circle = function() {
     axios.post( `/page_objects`, { "page_id": page.id, "object_type": "circle"})
     .then(async function (response) {
         let object = response.data;
-        console.log(JSON.stringify(object.id));
         axios.post( `/circles`, { "object_id": object.id })
         .then(async function (response) {
-            console.log(response);
             let circle = response.data;
             let data = Object.assign(object, circle);
             render_circle(data);
@@ -552,10 +585,8 @@ let create_default_triangle = function() {
     axios.post( `/page_objects`, { "page_id": page.id, "object_type": "triangle"})
     .then(async function (response) {
         let object = response.data;
-        console.log(JSON.stringify(object.id));
         axios.post( `/triangles`, { "object_id": object.id })
         .then(async function (response) {
-            console.log(response);
             let triangle = response.data;
             let data = Object.assign(object, triangle);
             render_triangle(data);
@@ -596,16 +627,15 @@ let delete_object = function(object) {
     canvas.remove(object);
 }
 
-let delete_text_box = function(text_box) {
-    axios.delete(
-        `/text_boxes/${text_box.id}`, 
-        text_box,
-    ).then(async function (response) {
-        console.log(await response);
-    }).catch(function (error) {  
-        console.error(error);  
-    });
-}
+// let delete_text_box = function(text_box) {
+//     axios.delete(
+//         `/text_boxes/${text_box.id}`, 
+//         text_box,
+//     ).then(async function (response) {
+//     }).catch(function (error) {  
+//         console.error(error);  
+//     });
+// }
 
 // let delete_image = function(image) {
 //     console.error("Not implemented yet!");
@@ -616,7 +646,6 @@ let delete_text_box = function(text_box) {
 //         `/rectangles/${rectangle.id}`, 
 //         rectangle,
 //     ).then(async function (response) {
-//         console.log(await response);
 //     }).catch(function (error) {  
 //         console.error(error);  
 //     });
@@ -627,7 +656,6 @@ let delete_text_box = function(text_box) {
 //         `/triangles/${triangle.id}`, 
 //         triangle,
 //     ).then(async function (response) {
-//         console.log(await response);
 //     }).catch(function (error) {  
 //         console.error(error);  
 //     });
@@ -638,7 +666,6 @@ let delete_text_box = function(text_box) {
 //         `/circles/${circle.id}`, 
 //         circle,
 //     ).then(async function (response) {
-//         console.log(await response);
 //     }).catch(function (error) {  
 //         console.error(error);  
 //     });
@@ -650,7 +677,6 @@ let delete_object_data = function(object_data) {
         `/page_objects/${object_data.id}`, 
         object_data,
     ).then(async function (response) {
-        console.log(await response);
     }).catch(function (error) {  
         console.error(error);  
     });
@@ -658,16 +684,5 @@ let delete_object_data = function(object_data) {
 
 let z_index_placement = function(page_object) {
     let z_index = page_object.z_index;
-    console.log(page_object)
-    console.log(`${page_object.object_type} has a z-index of ${z_index}`)
-
-    while (z_index != 0) {
-        if (z_index > 0) {
-            canvas.sendForward(page_object);
-            z_index--;
-        } else if (z_index < 0) {
-            canvas.sendBackwards(page_object);
-            z_index++;
-        }
-    }
+    canvas.moveTo(page_object, z_index);
 }
