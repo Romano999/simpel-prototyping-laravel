@@ -25,10 +25,15 @@
                                 <canvas id="canvas" class="absolute" width="1000" height="1000"></canvas>
                                 {{-- Canvas Item Editor --}}
                                 <div id="canvas-editor">
+                                    {{-- Text box --}}
                                     <div id="canvas-edit-text" class="absolute top-10 left-10" >
-                                        <div>
+                                        <div class="flex flex-row justify-between">
+                                            <label for="Color">Color:</label>
+                                            <input type="color" value="" id="text-fill-color">
+                                        </div>
+                                        <div class="flex flex-row justify-between">
                                             <label for="text-font-size">Font size:</label>
-                                            <input type="number" value="" step="1" id="text-font-size">
+                                            <input class="w-24" type="number" value="" step="1" id="text-font-size">
                                         </div>
                                         <div>
                                             <label for="text-z-index">Z-index:</label>
@@ -40,6 +45,7 @@
                                             </x-jet-button>
                                         </div>
                                     </div>
+                                    {{-- Image --}}
                                     <div id="canvas-edit-image" class="absolute top-10 left-10" >
                                         <div>
                                             <label for="image-z-index">Z-index:</label>
@@ -51,14 +57,23 @@
                                             </x-jet-button>
                                         </div>
                                     </div>
-                                    <div id="canvas-edit-rectangle" class="absolute top-10 left-10" >
-                                        <div>
-                                            <label for="rectangle-z-index">Z-index:</label>
-                                            <input type="number" value="" step="1" id="rectangle-z-index">
+                                    {{-- Rectangle --}}
+                                    <div id="canvas-edit-rectangle" class="absolute top-10 left-10">
+                                        <div class="flex flex-row justify-between">
+                                            <label for="Fill-olor">Fill-color:</label>
+                                            <input type="color" value="" id="rectangle-fill-color">
+                                        </div>
+                                        <div class="flex flex-row justify-between">
+                                            <label for="Stroke-color">Stroke-color:</label>
+                                            <input type="color" value="" id="rectangle-stroke-color">
                                         </div>
                                         <div>
                                             <label for="rectangle-stroke-width">Stroke width</label>
                                             <input type="number" value="" step="1" id="rectangle-stroke-width">
+                                        </div>
+                                        <div>
+                                            <label for="rectangle-z-index">Z-index:</label>
+                                            <input type="number" value="" step="1" id="rectangle-z-index">
                                         </div>
                                         <div>
                                             <x-jet-button id="delete-rectangle-button" class="flex-1">
@@ -66,14 +81,23 @@
                                             </x-jet-button>
                                         </div>
                                     </div>
+                                    {{-- Circle --}}
                                     <div id="canvas-edit-circle" class="absolute top-10 left-10" >
-                                        <div>
-                                            <label for="circle-z-index">Z-index:</label>
-                                            <input type="number" value="" step="1" id="circle-z-index">
+                                        <div class="flex flex-row justify-between">
+                                            <label for="Fill-color">Fill-color:</label>
+                                            <input type="color" value="" id="circle-fill-color">
+                                        </div>
+                                        <div class="flex flex-row justify-between">
+                                            <label for="Stroke-color">Stroke-color:</label>
+                                            <input type="color" value="" id="circle-stroke-color">
                                         </div>
                                         <div>
                                             <label for="circle-stroke-width">Stroke width</label>
                                             <input type="number" value="" step="1" id="circle-stroke-width">
+                                        </div>
+                                        <div>
+                                            <label for="circle-z-index">Z-index:</label>
+                                            <input type="number" value="" step="1" id="circle-z-index">
                                         </div>
                                         <div>
                                             <x-jet-button id="delete-circle-button" class="flex-1">
@@ -81,14 +105,23 @@
                                             </x-jet-button>
                                         </div>
                                     </div>
+                                    {{-- Triangle --}}
                                     <div id="canvas-edit-triangle" class="absolute top-10 left-10" >
-                                        <div>
-                                            <label for="triangle-z-index">Z-index:</label>
-                                            <input type="number" value="" step="1" id="triangle-z-index">
+                                        <div class="flex flex-row justify-between">
+                                            <label for="Fill-color">Fill-color:</label>
+                                            <input type="color" value="" id="triangle-fill-color">
+                                        </div>
+                                        <div class="flex flex-row justify-between">
+                                            <label for="Stroke-color">Stroke-color:</label>
+                                            <input type="color" value="" id="triangle-stroke-color">
                                         </div>
                                         <div>
                                             <label for="triangle-stroke-width">Stroke width</label>
                                             <input type="number" value="" step="1" id="triangle-stroke-width">
+                                        </div>
+                                        <div>
+                                            <label for="triangle-z-index">Z-index:</label>
+                                            <input type="number" value="" step="1" id="triangle-z-index">
                                         </div>
                                         <div>
                                             <x-jet-button id="delete-triangle-button" class="flex-1">

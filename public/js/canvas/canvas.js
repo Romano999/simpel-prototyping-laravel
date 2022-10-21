@@ -76,8 +76,26 @@ window.addEventListener('DOMContentLoaded', (event) => {
         canvas.renderAll();
     };
 
+    document.getElementById('text-fill-color').onchange = function() {
+        canvas.getActiveObject().set("fill", this.value);
+        post_object(canvas.getActiveObject());
+        canvas.renderAll();
+    };
+
     document.getElementById('rectangle-stroke-width').onchange = function() {
         canvas.getActiveObject().set("strokeWidth", parseInt(this.value));
+        post_object(canvas.getActiveObject());
+        canvas.renderAll();
+    };
+
+    document.getElementById('rectangle-fill-color').onchange = function() {
+        canvas.getActiveObject().set("fill", this.value);
+        post_object(canvas.getActiveObject());
+        canvas.renderAll();
+    };
+
+    document.getElementById('rectangle-stroke-color').onchange = function() {
+        canvas.getActiveObject().set("stroke", this.value);
         post_object(canvas.getActiveObject());
         canvas.renderAll();
     };
@@ -88,8 +106,32 @@ window.addEventListener('DOMContentLoaded', (event) => {
         canvas.renderAll();
     };
 
+    document.getElementById('circle-fill-color').onchange = function() {
+        canvas.getActiveObject().set("fill", this.value);
+        post_object(canvas.getActiveObject());
+        canvas.renderAll();
+    };
+
+    document.getElementById('circle-stroke-color').onchange = function() {
+        canvas.getActiveObject().set("stroke", this.value);
+        post_object(canvas.getActiveObject());
+        canvas.renderAll();
+    };
+
     document.getElementById('triangle-stroke-width').onchange = function() {
         canvas.getActiveObject().set("strokeWidth", parseInt(this.value));
+        post_object(canvas.getActiveObject());
+        canvas.renderAll();
+    };
+
+    document.getElementById('triangle-fill-color').onchange = function() {
+        canvas.getActiveObject().set("fill", this.value);
+        post_object(canvas.getActiveObject());
+        canvas.renderAll();
+    };
+
+    document.getElementById('triangle-stroke-color').onchange = function() {
+        canvas.getActiveObject().set("stroke", this.value);
         post_object(canvas.getActiveObject());
         canvas.renderAll();
     };
@@ -220,6 +262,7 @@ let display_canvas_edit = function(page_object) {
         document.getElementById('canvas-edit-text').style.display = 'block';
         document.getElementById('text-font-size').value = page_object.fontSize;
         document.getElementById('text-z-index').value = page_object.z_index;
+        document.getElementById('text-fill-color').value = page_object.fill;
     } else if (object_type == 'image') {
         document.getElementById('canvas-edit-image').style.display = 'block';
         document.getElementById('image-z-index').value = page_object.z_index;
@@ -227,14 +270,20 @@ let display_canvas_edit = function(page_object) {
         document.getElementById('canvas-edit-rectangle').style.display = 'block';
         document.getElementById('rectangle-stroke-width').value = page_object.strokeWidth;
         document.getElementById('rectangle-z-index').value = page_object.z_index;
+        document.getElementById('rectangle-fill-color').value = page_object.fill;
+        document.getElementById('rectangle-stroke-color').value = page_object.stroke;
     } else if (object_type == 'circle') {
         document.getElementById('canvas-edit-circle').style.display = 'block';
         document.getElementById('circle-stroke-width').value = page_object.strokeWidth;
         document.getElementById('circle-z-index').value = page_object.z_index;
+        document.getElementById('circle-fill-color').value = page_object.fill;
+        document.getElementById('circle-stroke-color').value = page_object.stroke;
     } else if (object_type == 'triangle') {
         document.getElementById('canvas-edit-triangle').style.display = 'block';
         document.getElementById('triangle-stroke-width').value = page_object.strokeWidth;
         document.getElementById('triangle-z-index').value = page_object.z_index;
+        document.getElementById('triangle-fill-color').value = page_object.fill;
+        document.getElementById('triangle-stroke-color').value = page_object.stroke;
     }
 }
 
@@ -288,6 +337,7 @@ let render_text_box = function(pageObject) {
         width: pageObject.width,
         object_type: pageObject.object_type,
         z_index: pageObject.z_index,
+        fill: pageObject.fill,
     });
 
     // Render the Text on Canvas
@@ -375,7 +425,7 @@ let post_object = function(event) {
         object_type = event.target.object_type;
     }
 
-    console.log(JSON.stringify(object))
+    console.log(`Whole object to post: ${JSON.stringify(object)}`)
 
     let object_data = { 
         id: object.object_id, 
@@ -389,23 +439,30 @@ let post_object = function(event) {
         z_index: object.z_index,
     };
 
+    console.log(`Relevant object to post: ${JSON.stringify(object_data)}`)
+
     console.log(JSON.stringify(object_data))
     post_object_data(object_data)
 
     if (object_type === 'text_box') {
-        let text_box = { id: object.id, text: object.text, font_size: object.fontSize }
+        let text_box = { id: object.id, text: object.text, font_size: object.fontSize, fill: object.fill }
+        console.log(`Textbox to post: ${JSON.stringify(text_box)}`)
         post_text_box(text_box)
     } else if (object_type == 'image') {
         let image = {};
+        console.log(`Image to post: ${JSON.stringify(image)}`)
         post_image(image);
     } else if (object_type == 'rectangle') {
-        let rectangle = { id: object.id, fill: object.fill, stroke: object.stroke, stroke_width: object.strokeWidth,};
+        let rectangle = { id: object.id, fill: object.fill, stroke: object.stroke, stroke_width: object.strokeWidth, fill: object.fill, stroke: object.stroke, };
+        console.log(`Rectangle to post: ${JSON.stringify(rectangle)}`)
         post_rectangle(rectangle);
     } else if (object_type == 'circle') {
-        let circle = { id: object.id, radius: object.radius * object.scaleX, fill: object.fill, stroke: object.stroke, stroke_width: object.strokeWidth,};
+        let circle = { id: object.id, radius: object.radius * object.scaleX, fill: object.fill, stroke: object.stroke, stroke_width: object.strokeWidth, fill: object.fill, stroke: object.stroke, };
+        console.log(`Circle to post: ${JSON.stringify(circle)}`)
         post_circle(circle);
     } else if (object_type == 'triangle') {
-        let triangle = { id: object.id, fill: object.fill, stroke: object.stroke, stroke_width: object.strokeWidth,};;
+        let triangle = { id: object.id, fill: object.fill, stroke: object.stroke, stroke_width: object.strokeWidth, fill: object.fill, stroke: object.stroke, };
+        console.log(`Triangle to post: ${JSON.stringify(triangle)}`)
         post_triangle(triangle);
     }
 
@@ -684,5 +741,10 @@ let delete_object_data = function(object_data) {
 
 let z_index_placement = function(page_object) {
     let z_index = page_object.z_index;
-    canvas.moveTo(page_object, z_index);
+
+    if (z_index === 0) {
+        canvas.bringForward(page_object);
+    } else {
+        canvas.moveTo(page_object, z_index);
+    } 
 }
