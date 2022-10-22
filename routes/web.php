@@ -34,7 +34,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('dashboard', function () {
-        return view('dashboard');
+        return redirect('pages');
     })->name('dashboard');
     Route::resource('pages', PageController::class);
     Route::resource('page_objects', PageObjectController::class);

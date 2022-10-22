@@ -5,19 +5,32 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ url('') }}">
                         <x-jet-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
+                <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-jet-nav-link href="{{ url('') }}" :active="request()->is('/')">
+                        {{ __('Home') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('pages.index') }}" :active="request()->routeIs('pages.*')">
+                    <x-jet-nav-link href="{{ url('about') }}" :active="request()->is('about')">
+                        {{ __('About') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ url('contact') }}" :active="request()->is('contact')">
+                        {{ __('Contact') }}
+                    </x-jet-nav-link>
+                    @auth
+                    <x-jet-nav-link href="{{ url('pages') }}" :active="request()->is('pages')">
                         {{ __('Pages') }}
                     </x-jet-nav-link>
+                    @else
+                    <x-jet-nav-link href="{{ url('login') }}" :active="request()->is('login')">
+                        {{ __('Login') }}
+                    </x-jet-nav-link>
+                    @endauth
                 </div>
             </div>
 
@@ -140,10 +153,6 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-jet-responsive-nav-link>
-
             <x-jet-responsive-nav-link href="{{ route('pages.index') }}" :active="request()->routeIs('pages.*')">
                 {{ __('Pages') }}
             </x-jet-responsive--nav-link>
