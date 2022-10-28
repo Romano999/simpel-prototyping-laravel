@@ -47,9 +47,9 @@
                     <x-jet-nav-link href="{{ url('') }}" :active="request()->is('/')">
                         {{ __('Home') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ url('about') }}" :active="request()->is('about')">
+                    {{-- <x-jet-nav-link href="{{ url('about') }}" :active="request()->is('about')">
                         {{ __('About') }}
-                    </x-jet-nav-link>
+                    </x-jet-nav-link> --}}
                     <x-jet-nav-link href="{{ url('contact') }}" :active="request()->is('contact')">
                         {{ __('Contact') }}
                     </x-jet-nav-link>
