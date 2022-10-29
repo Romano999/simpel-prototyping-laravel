@@ -15,8 +15,21 @@ class PageSeeder extends Seeder
     public function run()
     {
         Page::factory()->create([
-           'name' => 'Test page',
+           'name' => 'Romano\'s first test page',
            'user_id' => 1,
+           'team_id' => 1,
+        ]);
+
+        Page::factory()->create([
+            'name' => 'Romano\'s second test page',
+            'user_id' => 1,
+            'team_id' => 1,
+        ]);
+
+        Page::factory()->create([
+            'name' => 'Hallo\'s first test page',
+            'user_id' => 2,
+            'team_id' => 2,
         ]);
     }
 }
