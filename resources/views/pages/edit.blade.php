@@ -60,7 +60,7 @@
                                     {{-- Rectangle --}}
                                     <div id="canvas-edit-rectangle" class="absolute top-10 left-10">
                                         <div class="flex flex-row justify-between">
-                                            <label for="Fill-olor">Fill-color:</label>
+                                            <label for="Fill-color">Fill-color:</label>
                                             <input type="color" value="" id="rectangle-fill-color">
                                         </div>
                                         <div class="flex flex-row justify-between">
@@ -139,9 +139,9 @@
                                         <x-jet-button id="create-text-button" class="flex-1">
                                             {{ __('Create text') }}
                                         </x-jet-button>
-                                        <x-jet-button id="create-image-button" class="flex-1">
-                                            {{ __('Create image') }}
-                                        </x-jet-button>
+                                        {{-- <x-jet-button href="{{ route('register') }}" id="create-image-button" class="flex-1">
+                                            <a href="{{ url("images/create") }}">{{ __('Create image') }}</a>
+                                        </x-jet-button> --}}
                                         <x-jet-button id="create-rectangle-button" class="flex-1">
                                             {{ __('Create rectangle') }}
                                         </x-jet-button>
