@@ -77,6 +77,8 @@ class TextBoxController extends Controller
     {
         DB::table('text_boxes')->where('id', $textBox->id)->update([
             'text' => $request->text,
+            'font_size' => $request->font_size,
+            'fill' => $request->fill,
         ]);
 
         return;
@@ -90,7 +92,6 @@ class TextBoxController extends Controller
      */
     public function destroy(TextBox $textBox)
     {
-        return 'test';
         // return DB::table('page_objects')->delete($textBox->id);
     }
 }

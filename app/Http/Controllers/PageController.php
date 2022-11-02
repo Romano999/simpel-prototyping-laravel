@@ -16,7 +16,12 @@ class PageController extends Controller
      */
     public function index()
     {
-        $pages = Page::all();
+        $currentTeam = auth()->user()->currentTeam->id;
+        $pages[] = DB::table('pages')->where('team_id', $currentTeam)->get();
+
+        // return compact('pages');
+        $pages = Page::where('team_id', '=' , $currentTeam)->get();
+        // return compact('pages');
         return view('pages.index', compact('pages'));
     }
 
@@ -40,6 +45,7 @@ class PageController extends Controller
     {
         $data = $request->validated();
         $data['user_id'] = auth()->user()->id;
+        $data['team_id'] = auth()->user()->currentTeam->id;
         Page::create($data);
 
         return redirect()->route('pages.index');

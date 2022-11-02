@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('team_id')->references('id')->on('teams')->onDelete('cascade');
             $table->string('name');
             $table->timestamps();
         });

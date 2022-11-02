@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CircleController;
+use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PageObjectController;
@@ -24,13 +26,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('about', [HomeController::class, 'about']);
+Route::get('contact', [HomeController::class, 'contact']);
+Route::resource('contact_messages', ContactMessageController::class);
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
     Route::get('dashboard', function () {
-        return view('dashboard');
+        return redirect('pages');
     })->name('dashboard');
     Route::resource('pages', PageController::class);
     Route::resource('page_objects', PageObjectController::class);

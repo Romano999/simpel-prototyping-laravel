@@ -27,19 +27,7 @@
         @livewireStyles
     </head>
     <body class="antialiased">
-        @if (Route::has('login'))
-            <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                @auth
-                    <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
-                @else
-                    <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                    @endif
-                @endauth
-            </div>
-        @endif
+        @include('components.navigation-bar')
         <div class="py-20 px-10">
             <div class="flex flex-row justify-center items-end">
                 <div class="mx-auto my-auto">
@@ -50,13 +38,13 @@
                             Simpel Prototyping helps with building a fully designed prototype in less than 10 minutes.
                         </h2>
                         <div class="flex flex-row gap-x-20">
-                            <button class="text-white bg-red-500 dark:bg-red-600 rounded-md p-2 pr-3 pl-3">Try it for free</button>
-                            <button class="border-2 border-red-400 dark:border-red-400 rounded-md p-2 pr-3 pl-3">Learn more</button>
+                            <a href="{{ route('register') }}"><button class="text-white bg-red-500 dark:bg-red-600 rounded-md p-2 pr-3 pl-3">Try it for free</button></a>
+                            <a href="{{ url('/about') }}"><button class="border-2 border-red-400 dark:border-red-400 rounded-md p-2 pr-3 pl-3">Learn more</button></a>
                         </div>
                     </div>
                 </div>
                 <div class="mx-auto">
-                    <img src="{{ asset("logo/logo.png") }}" alt="" width="500px">
+                    <img src="{{ asset("site/prototype.png") }}" alt="" width="500px">
                 </div>
             </div>
         </div>

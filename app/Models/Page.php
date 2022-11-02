@@ -16,6 +16,7 @@ class Page extends Model
     */
     protected $fillable = [
         'user_id',
+        'team_id',
         'name',
     ];
 }

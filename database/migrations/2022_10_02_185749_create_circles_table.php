@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('object_id')->references('id')->on('page_objects')->onDelete('cascade');
             $table->integer('radius')->default(50);
             $table->string('fill')->default('');
-            $table->string('stroke')->default('red');
+            $table->string('stroke')->default('#000000');
             $table->integer('stroke_width')->default(2);
             $table->timestamps();
         });
