@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContactMessage;
 use App\Http\Requests\StoreContactMessageRequest;
 use App\Http\Requests\UpdateContactMessageRequest;
+use App\Models\ContactMessage;
 
 class ContactMessageController extends Controller
 {

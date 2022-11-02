@@ -26,8 +26,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/about', [HomeController::class, 'about']);
-Route::get('/contact', [HomeController::class, 'contact']);
+Route::get('about', [HomeController::class, 'about']);
+Route::get('contact', [HomeController::class, 'contact']);
 Route::resource('contact_messages', ContactMessageController::class);
 
 Route::middleware([

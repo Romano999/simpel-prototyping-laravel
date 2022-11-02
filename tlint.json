@@ -1,4 +1,4 @@
 {
     "preset": "laravel",
-    "disabled": ["NoCompact"]
+    "disabled": ["NoCompact", "TrailingCommasOnArrays"]
 }
