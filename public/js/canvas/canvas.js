@@ -53,9 +53,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
         create_default_text()
     };
 
-    // document.getElementById('create-image-button').onclick = function() {
-    //     create_default_image()
-    // };
+    document.getElementById('create-image-button').onclick = function() {
+        create_default_image()
+    };
 
     document.getElementById('create-rectangle-button').onclick = function() {
         create_default_rectangle()
@@ -304,24 +304,24 @@ let render = function(pageObject) {
 }
 
 let render_image = function(pageObject) {
-    // fabric.Image.fromURL(`../../media/${pageObject.image}`, function(img, isError) {
-    //     if (isError) {
-    //         console.error("Error occured!")
-    //     } else {
-    //         let oImg = img.set({
-    //             left: pageObject.pos_x,  
-    //             top: pageObject.pos_y,
-    //             angle: pageObject.angle,
-    //             height: pageObject.height,
-    //             width: pageObject.width,
-    //             object_id: pageObject.object_id,
-    //             object_type: pageObject.object_type,
-    //             z_index: pageObject.z_index,
-    //         });
-    //         canvas.add(oImg);
-    //         z_index_placement(oImg);
-    //     }
-    // });
+    fabric.Image.fromURL(`../../media/${pageObject.image}`, function(img, isError) {
+        if (isError) {
+            console.error("Error occured!")
+        } else {
+            let oImg = img.set({
+                left: pageObject.pos_x,  
+                top: pageObject.pos_y,
+                angle: pageObject.angle,
+                height: pageObject.height,
+                width: pageObject.width,
+                object_id: pageObject.object_id,
+                object_type: pageObject.object_type,
+                z_index: pageObject.z_index,
+            });
+            canvas.add(oImg);
+            z_index_placement(oImg);
+        }
+    });
 }
 
 let render_text_box = function(pageObject) {
@@ -333,8 +333,8 @@ let render_text_box = function(pageObject) {
         left: pageObject.pos_x,
         top: pageObject.pos_y,
         angle: pageObject.angle,
-        height: pageObject.height,
-        width: pageObject.width,
+        height: pageObject.height * pageObject.scaleY,
+        width: pageObject.width * pageObject.scaleX,
         object_type: pageObject.object_type,
         z_index: pageObject.z_index,
         fill: pageObject.fill,
@@ -486,7 +486,7 @@ let post_text_box = function(text_box) {
 }
 
 let post_image = function() {
-    console.error("Not implemented yet!");
+    // console.error("Not implemented yet!");
 }
 
 let post_rectangle = function(rectangle) {

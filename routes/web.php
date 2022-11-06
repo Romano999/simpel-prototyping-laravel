@@ -43,6 +43,8 @@ Route::middleware([
     Route::resource('text_boxes', TextBoxController::class);
     Route::resource('rectangles', RectangleController::class);
     Route::resource('triangles', TriangleController::class);
-    Route::resource('images', ImageController::class);
+    Route::get('images/{id}', [ImageController::class, 'create']);
+    Route::post('images/{id}', [ImageController::class, 'store']);
+    // Route::resource('images', ImageController::class);
     Route::resource('circles', CircleController::class);
 });

@@ -34,9 +34,11 @@ class ContactMessageController extends Controller
      * @param  \App\Http\Requests\StoreContactMessageRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreContactMessageRequest $request)
+    public function store(StoreContactMessageRequest $request, $id)
     { 
-        $contact_message = ContactMessage::create([
+        $request = $request->validated();
+
+        ContactMessage::create([
             'name' => $request->name,
             'email' => $request->email,
             'subject' => $request->subject,
