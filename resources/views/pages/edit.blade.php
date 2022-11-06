@@ -139,9 +139,9 @@
                                         <x-jet-button id="create-text-button" class="flex-1">
                                             {{ __('Create text') }}
                                         </x-jet-button>
-                                        {{-- <x-jet-button href="{{ route('register') }}" id="create-image-button" class="flex-1">
-                                            <a href="{{ url("images/create") }}">{{ __('Create image') }}</a>
-                                        </x-jet-button> --}}
+                                        <x-jet-button href="{{ route('register') }}" id="create-image-button" class="flex-1">
+                                            <a href="{{ url("images/$page->id") }}">{{ __('Create image') }}</a>
+                                        </x-jet-button>
                                         <x-jet-button id="create-rectangle-button" class="flex-1">
                                             {{ __('Create rectangle') }}
                                         </x-jet-button>

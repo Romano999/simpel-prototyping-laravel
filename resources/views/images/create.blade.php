@@ -1,3 +1,6 @@
+<script>
+    var id = @json($id);
+</script>
 <x-app-layout>
 
     <div class="py-12">
@@ -5,7 +8,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4">
                     <x-jet-validation-errors class="mb-4" />
-                    <form method="POST" action="{{ route('images.store') }}" 
+                    <form method="POST" action="{{ url('images', $id) }}" 
                     enctype="multipart/form-data">
                 @csrf
                 <div class="image my-4">

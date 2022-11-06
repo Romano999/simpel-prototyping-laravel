@@ -27,7 +27,8 @@ class ImageController extends Controller
      */
     public function create()
     {
-        return view('images.create');
+        $id = (string) request()->segment(2);
+        return view('images.create', compact('id'));
     }
 
     /**
@@ -40,7 +41,7 @@ class ImageController extends Controller
     {
         $data = new Image;
         $pageObjectId = PageObject::create([            
-            'page_id' => 1,
+            'page_id' => $request->id,
             'object_type' => 'image',
         ])->id;
 
